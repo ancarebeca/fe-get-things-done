@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {Icon, Label, Menu, Table} from 'semantic-ui-react'
 
 const Goal = props => {
     return (
-        <tr>
-            <td>{props.goal.goal_user_name}</td>
-            <td>{props.goal.goal_description}</td>
-            <td>{props.goal.goal_deadline}</td>
-            <td>{props.goal.goal_accountable_partner}</td>
-            <td>{props.goal.goal_penalty}</td>
-            <td>{props.goal.goal_status}</td>
-            <td>
+        <Table.Row>
+            <Table.Cell>{props.goal.goal_user_name}</Table.Cell>
+            <Table.Cell>{props.goal.goal_description}</Table.Cell>
+            <Table.Cell>{props.goal.goal_deadline}</Table.Cell>
+            <Table.Cell>{props.goal.goal_accountable_partner}</Table.Cell>
+            <Table.Cell>{props.goal.goal_penalty}</Table.Cell>
+            <Table.Cell>{props.goal.goal_status}</Table.Cell>
+            <Table.Cell>
                 <Link to={"/edit/" + props.goal.goal_id}>Edit</Link>
                 <a onClick={props.onDelete}>Delete</a>
-            </td>
-        </tr>
+            </Table.Cell>
+        </Table.Row>
     )
 }
 
@@ -58,25 +59,24 @@ export default class GoalsList extends Component {
 
     render() {
         return (
-
             <div>
                 <h3>Goals List</h3>
-                <table className="table table-striped" style={{marginTop: 20}}>
-                    <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Description</th>
-                        <th>Deadline</th>
-                        <th>Accountable Partner</th>
-                        <th>Penalty</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.goalList()}
-                    </tbody>
-                </table>
+                <Table celled>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Username</Table.HeaderCell>
+                            <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell>Deadline</Table.HeaderCell>
+                            <Table.HeaderCell>Accountable Partner</Table.HeaderCell>
+                            <Table.HeaderCell>Penalty</Table.HeaderCell>
+                            <Table.HeaderCell>Status</Table.HeaderCell>
+                            <Table.HeaderCell></Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {this.goalList()}
+                    </Table.Body>
+                </Table>
             </div>
         )
     }
