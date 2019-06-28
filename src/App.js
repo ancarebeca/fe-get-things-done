@@ -1,7 +1,7 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import {BrowserRouter as Router, Link, Route} from "react-router-dom";
-import {Grid, Container, Header, Button, Table} from 'semantic-ui-react'
+import {Grid, Container, Header, Button} from 'semantic-ui-react'
 import CreateGoal from "./components/create-goal.component";
 import EditGoal from "./components/edit-goal.component";
 import GoalsList from "./components/goals-list.component";
