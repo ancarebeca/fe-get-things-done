@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Table, List } from "semantic-ui-react";
+import { Table, List, Button } from "semantic-ui-react";
 
 const Goal = props => {
   return (
@@ -80,6 +80,13 @@ export default class GoalsList extends Component {
     return (
       <div>
         <h3>Goals List</h3>
+        <div>
+          <Link to={"/create/"}>
+            <Button color="blue" size="small" floated="right">
+              New Goal
+            </Button>
+          </Link>
+        </div>
         <Table celled>
           <Table.Header>
             <Table.Row>

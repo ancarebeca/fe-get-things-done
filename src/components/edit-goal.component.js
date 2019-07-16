@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Form, Grid, Header, Container } from "semantic-ui-react";
+import { Grid, Header, Container } from "semantic-ui-react";
+import GlobalForm from "./gobal-form";
 
 export default class EditGoal extends Component {
   constructor(props) {
@@ -18,12 +19,14 @@ export default class EditGoal extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      goal_user_name: "",
-      goal_description: "",
-      goal_deadline: "",
-      goal_accountable_partner: "",
-      goal_penalty: "",
-      goal_status: "new"
+      goal: {
+        user_name: "",
+        description: "",
+        deadline: "",
+        accountable_partner: "",
+        penalty: "",
+        status: "new"
+      }
     };
   }
 
@@ -31,80 +34,96 @@ export default class EditGoal extends Component {
     axios
       .get("http://localhost:4000/goals/" + this.props.match.params.id)
       .then(response => {
-        this.setState({
-          goal_user_name: response.data.goal_user_name,
-          goal_description: response.data.goal_description,
-          goal_deadline: response.data.goal_deadline,
-          goal_accountable_partner: response.data.goal_accountable_partner,
-          goal_penalty: response.data.goal_penalty,
-          goal_status: response.data.goal_status
-        });
+        const goalRetrieved = {
+            user_name: response.data.goal_user_name,
+            description: response.data.goal_description,
+            deadline: response.data.goal_deadline,
+            accountable_partner: response.data.goal_accountable_partner,
+            penalty: response.data.goal_penalty,
+            status: response.data.goal_status
+        };
+        this.setState({ goal: goalRetrieved });
       })
       .catch(function(error) {
+        // Todo: handle errors
         console.log(error);
       });
   }
 
-  //Methods which can be used to update the state properties:
   onChangeGoalUserName(e) {
-    this.setState({
-      goal_user_name: e.target.value
-    });
+    this.setState({ goal: { ...this.state.goal, user_name: e.target.value } });
   }
 
   onChangeGoalDescription(e) {
     this.setState({
-      goal_description: e.target.value
+      goal: { ...this.state.goal, description: e.target.value }
     });
   }
 
   onChangeGoalDeadline(e) {
     this.setState({
-      goal_deadline: e.target.value
+      goal: { ...this.state.goal, deadline: e.target.value }
     });
   }
 
   onChangeGoalAcountablePartner(e) {
     this.setState({
-      goal_accountable_partner: e.target.value
+      goal: { ...this.state.goal, accountable_partner: e.target.value }
     });
   }
 
   onChangeGoalPenalty(e) {
     this.setState({
-      goal_penalty: e.target.value
-    });
+        goal: { ...this.state.goal, penalty: e.target.value }
+      });
   }
 
   onChangeGoalStatus(e) {
     this.setState({
-      goal_status: e.target.value
+      goal: { ...this.state.goal, status: e.target.value }
     });
   }
 
   onSubmit(e) {
     e.preventDefault();
-    const obj = {
-      goal_user_name: this.state.goal_user_name,
-      goal_description: this.state.goal_description,
-      goal_deadline: this.state.goal_deadline,
-      goal_accountable_partner: this.state.goal_accountable_partner,
-      goal_penalty: this.state.goal_penalty,
-      goal_status: this.state.goal_status
+    const goalUpdated = {
+      goal_user_name: this.state.goal.user_name,
+      goal_description: this.state.goal.description,
+      goal_deadline: this.state.goal.deadline,
+      goal_accountable_partner: this.state.goal.accountable_partner,
+      goal_penalty: this.state.goal.penalty,
+      goal_status: this.state.goal.status
     };
-    console.log(obj);
+
+    console.log("Goal updated");
+    console.log(goalUpdated);
+
     axios
       .post(
         "http://localhost:4000/goals/update/" + this.props.match.params.id,
-        obj
+        goalUpdated
       )
       .then(res => {
         console.log(res.data);
         this.props.history.push("/");
       });
+    // Todo: handler error
   }
 
   render() {
+    const isPenaltyValid =
+      0 < parseInt(this.state.goal_penalty, 10) &&
+      parseInt(this.state.goal_penalty, 10) < Infinity;
+    const actions = {
+      onChangeGoalUserName: this.onChangeGoalUserName,
+      onChangeGoalDescription: this.onChangeGoalDescription,
+      onChangeGoalDeadline: this.onChangeGoalDeadline,
+      onChangeGoalAcountablePartner: this.onChangeGoalAcountablePartner,
+      onChangeGoalPenalty: this.onChangeGoalPenalty,
+      onChangeGoalStatus: this.onChangeGoalStatus,
+      onSubmit: this.onSubmit
+    };
+
     return (
       <Container>
         <Grid>
@@ -115,64 +134,12 @@ export default class EditGoal extends Component {
               </Header>
             </Grid.Column>
           </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Form onSubmit={this.onSubmit}>
-                <Form.Field>
-                  <label>Username: </label>
-                  <input
-                    type="text"
-                    value={this.state.goal_user_name}
-                    onChange={this.onChangeGoalUserName}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Description: </label>
-                  <input
-                    type="text"
-                    value={this.state.goal_description}
-                    onChange={this.onChangeGoalDescription}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Deadline: </label>
-                  <input
-                    type="text"
-                    value={this.state.goal_deadline}
-                    onChange={this.onChangeGoalDeadline}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Accountable Partner: </label>
-                  <input
-                    type="text"
-                    value={this.state.goal_accountable_partner}
-                    onChange={this.onChangeGoalAcountablePartner}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Penalty: </label>
-                  <input
-                    type="text"
-                    value={this.state.goal_penalty}
-                    onChange={this.onChangeGoalPenalty}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Status: </label>
-                  <input
-                    type="text"
-                    value={this.state.goal_status}
-                    onChange={this.onChangeGoalStatus}
-                  />
-                </Form.Field>
-                <button control="submit" className="ui button">
-                  Update
-                </button>
-              </Form>
-            </Grid.Column>
-          </Grid.Row>
+          <GlobalForm
+            validations={{ isPenaltyValid }}
+            goal={this.state.goal}
+            actions={actions}
+            buttonName="Edit"
+          />
         </Grid>
       </Container>
     );
