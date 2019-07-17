@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Form, Button } from "semantic-ui-react";
+import DatePicker from "react-datepicker";
 
 export default function GlobalForm({ validations, goal, actions, buttonName }) {
   console.log("Inside GlobalForm ");
@@ -27,9 +28,8 @@ export default function GlobalForm({ validations, goal, actions, buttonName }) {
           </Form.Field>
           <Form.Field>
             <label>Deadline: </label>
-            <input
-              type="text"
-              value={goal.deadline}
+            <DatePicker
+              selected={goal.deadline}
               onChange={actions.onChangeGoalDeadline}
             />
           </Form.Field>

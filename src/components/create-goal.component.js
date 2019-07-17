@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Grid, Header, Container } from "semantic-ui-react";
 import GlobalForm from "./gobal-form";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export default class CreateGoal extends Component {
   constructor(props) {
@@ -21,7 +24,7 @@ export default class CreateGoal extends Component {
       goal: {
         user_name: "",
         description: "",
-        deadline: "",
+        deadline: new Date(),
         accountable_partner: "",
         penalty: "",
         status: "new"
@@ -39,9 +42,9 @@ export default class CreateGoal extends Component {
     });
   }
 
-  onChangeGoalDeadline(e) {
+  onChangeGoalDeadline(date) {
     this.setState({
-      goal: { ...this.state.goal, deadline: e.target.value }
+      goal: { ...this.state.goal, deadline: date }
     });
   }
 
@@ -86,7 +89,7 @@ export default class CreateGoal extends Component {
       goal: {
         user_name: "",
         description: "",
-        deadline: "",
+        deadline: new Date(),
         accountable_partner: "",
         penalty: "",
         status: "new"
@@ -96,8 +99,8 @@ export default class CreateGoal extends Component {
 
   render() {
     const isPenaltyValid =
-      0 < parseInt(this.state.goal_penalty, 10) &&
-      parseInt(this.state.goal_penalty, 10) < Infinity;
+      0 < parseInt(this.state.goal.penalty, 10) &&
+      parseInt(this.state.goal.penalty, 10) < Infinity;
 
     const actions = {
       onChangeGoalUserName: this.onChangeGoalUserName,
