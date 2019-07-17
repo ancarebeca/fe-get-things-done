@@ -3,9 +3,6 @@ import { Grid, Form, Button } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 
 export default function GlobalForm({ validations, goal, actions, buttonName }) {
-  console.log("Inside GlobalForm ");
-
-  console.log({ goal }, goal.user_name);
   return (
     <Grid.Row>
       <Grid.Column width={16}>

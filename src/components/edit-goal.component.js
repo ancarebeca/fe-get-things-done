@@ -22,7 +22,7 @@ export default class EditGoal extends Component {
       goal: {
         user_name: "",
         description: "",
-        deadline: "",
+        deadline: new Date(),
         accountable_partner: "",
         penalty: "",
         status: "new"
@@ -60,9 +60,9 @@ export default class EditGoal extends Component {
     });
   }
 
-  onChangeGoalDeadline(e) {
+  onChangeGoalDeadline(date) {
     this.setState({
-      goal: { ...this.state.goal, deadline: e.target.value }
+      goal: { ...this.state.goal, deadline: date }
     });
   }
 
@@ -112,8 +112,8 @@ export default class EditGoal extends Component {
 
   render() {
     const isPenaltyValid =
-      0 < parseInt(this.state.goal_penalty, 10) &&
-      parseInt(this.state.goal_penalty, 10) < Infinity;
+      0 < parseInt(this.state.goal.penalty, 10) &&
+      parseInt(this.state.goal.penalty, 10) < Infinity;
     const actions = {
       onChangeGoalUserName: this.onChangeGoalUserName,
       onChangeGoalDescription: this.onChangeGoalDescription,

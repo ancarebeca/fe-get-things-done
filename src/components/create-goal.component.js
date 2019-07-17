@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Grid, Header, Container } from "semantic-ui-react";
 import GlobalForm from "./gobal-form";
-import DatePicker from "react-datepicker";
+import { withRouter } from "react-router";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-export default class CreateGoal extends Component {
+class CreateGoal extends Component {
   constructor(props) {
     super(props);
 
@@ -69,17 +69,17 @@ export default class CreateGoal extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    console.log(`Form submitted:`);
-    console.log(`goal: ${this.state.goal}`);
-
     const newGoal = {
       goal_user_name: this.state.goal.user_name,
       goal_description: this.state.goal.description,
       goal_deadline: this.state.goal.deadline,
-      goal_accountable_partner: this.state.accountable_partner,
-      goal_penalty: this.state.penalty,
-      goal_status: this.state.status
+      goal_accountable_partner: this.state.goal.accountable_partner,
+      goal_penalty: this.state.goal.penalty,
+      goal_status: this.state.goal.status
     };
+
+    console.log("New goal");
+    console.log(newGoal);
 
     axios
       .post("http://localhost:4000/goals/add", newGoal)
@@ -95,6 +95,8 @@ export default class CreateGoal extends Component {
         status: "new"
       }
     };
+
+    this.props.history.push("/");
   }
 
   render() {
@@ -133,3 +135,5 @@ export default class CreateGoal extends Component {
     );
   }
 }
+
+export default withRouter(CreateGoal);
