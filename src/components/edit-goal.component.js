@@ -3,6 +3,8 @@ import axios from "axios";
 import { Grid, Header, Container } from "semantic-ui-react";
 import GlobalForm from "./gobal-form";
 
+import "react-datepicker/dist/react-datepicker.css";
+
 export default class EditGoal extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +39,7 @@ export default class EditGoal extends Component {
         const goalRetrieved = {
             user_name: response.data.goal_user_name,
             description: response.data.goal_description,
-            deadline: response.data.goal_deadline,
+            deadline: new Date(response.data.goal_deadline),
             accountable_partner: response.data.goal_accountable_partner,
             penalty: response.data.goal_penalty,
             status: response.data.goal_status

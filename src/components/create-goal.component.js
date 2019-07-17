@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Grid, Header, Container } from "semantic-ui-react";
 import GlobalForm from "./gobal-form";
-import { withRouter } from "react-router";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-class CreateGoal extends Component {
+export default class CreateGoal extends Component {
   constructor(props) {
     super(props);
 
@@ -135,5 +134,3 @@ class CreateGoal extends Component {
     );
   }
 }
-
-export default withRouter(CreateGoal);
