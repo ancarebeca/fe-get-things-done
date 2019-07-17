@@ -18,6 +18,7 @@ export default class CreateGoal extends Component {
     );
     this.onChangeGoalPenalty = this.onChangeGoalPenalty.bind(this);
     this.onChangeGoalStatus = this.onChangeGoalStatus.bind(this);
+    this.handleOnFocus = this.handleOnFocus.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
@@ -26,11 +27,24 @@ export default class CreateGoal extends Component {
         description: "",
         deadline: new Date(),
         accountable_partner: "",
-        penalty: "",
+        penalty: "0",
         status: "new"
+      },
+      errors: {},
+      touched: {
+        user_name: false,
+        description: false,
+        deadline: false,
+        accountable_partner: false,
+        penalty: false,
+        status: false
       }
     };
   }
+
+  handleOnFocus = fieldName => e => {
+    this.setState({ touched: { ...this.state.touched, [fieldName]: true } });
+  };
 
   onChangeGoalUserName(e) {
     this.setState({ goal: { ...this.state.goal, user_name: e.target.value } });
@@ -69,6 +83,10 @@ export default class CreateGoal extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    if (!this.handleValidation()) {
+      return;
+    }
+
     const newGoal = {
       goal_user_name: this.state.goal.user_name,
       goal_description: this.state.goal.description,
@@ -78,32 +96,79 @@ export default class CreateGoal extends Component {
       goal_status: this.state.goal.status
     };
 
-    console.log("New goal");
-    console.log(newGoal);
+    axios.post("http://localhost:4000/goals/add", newGoal).then(res => {
+      this.setState({
+        goal: {
+          user_name: "",
+          description: "",
+          deadline: new Date(),
+          accountable_partner: "",
+          penalty: "0",
+          status: "new"
+        }
+      });
+      this.props.history.push("/");
+      console.log(res.data);
+    });
+  }
 
-    axios
-      .post("http://localhost:4000/goals/add", newGoal)
-      .then(res => console.log(res.data));
+  handleValidation() {
+    let errors = {};
+    let formIsValid = true;
+    const touched = Object.keys(this.state.touched).reduce((acc, key) => {
+      acc[key] = true;
+      return acc;
+    }, {});
 
-    this.setState = {
-      goal: {
-        user_name: "",
-        description: "",
-        deadline: new Date(),
-        accountable_partner: "",
-        penalty: "",
-        status: "new"
-      }
-    };
+    if (!this.isUsernameValid()) {
+      formIsValid = false;
+      errors["user_name"] = "Username cannot be empty";
+    }
 
-    this.props.history.push("/");
+    if (!this.isAcountablePartnerValid()) {
+      formIsValid = false;
+      errors["accountablePartner"] = "Accountable partner cannot be empty";
+    }
+
+    if (!this.isDescriptionValid()) {
+      formIsValid = false;
+      errors["description"] = "Description cannot be empty";
+    }
+
+    if (!this.isPenaltyValid()) {
+      formIsValid = false;
+      errors["penalty"] = "Penalty has to be bigger than 0";
+    }
+
+    this.setState({ errors, touched });
+    return formIsValid;
+  }
+
+  isEmptyField(value) {
+    return !value || value === undefined || value === "" || value.length === 0;
+  }
+
+  isUsernameValid() {
+    return !this.isEmptyField(this.state.goal.user_name);
+  }
+
+  isDescriptionValid() {
+    const description = this.state.goal.description;
+    return !this.isEmptyField(description);
+  }
+
+  isPenaltyValid() {
+    return (
+      0 < parseInt(this.state.goal.penalty, 10) &&
+      parseInt(this.state.goal.penalty, 10) < Infinity
+    );
+  }
+
+  isAcountablePartnerValid() {
+    return !this.isEmptyField(this.state.goal.accountable_partner);
   }
 
   render() {
-    const isPenaltyValid =
-      0 < parseInt(this.state.goal.penalty, 10) &&
-      parseInt(this.state.goal.penalty, 10) < Infinity;
-
     const actions = {
       onChangeGoalUserName: this.onChangeGoalUserName,
       onChangeGoalDescription: this.onChangeGoalDescription,
@@ -111,7 +176,14 @@ export default class CreateGoal extends Component {
       onChangeGoalAcountablePartner: this.onChangeGoalAcountablePartner,
       onChangeGoalPenalty: this.onChangeGoalPenalty,
       onChangeGoalStatus: this.onChangeGoalStatus,
-      onSubmit: this.onSubmit
+      onSubmit: this.onSubmit,
+      onFocus: this.handleOnFocus
+    };
+    const validations = {
+      isPenaltyValid: this.isPenaltyValid(),
+      isUserNameValid: this.isUsernameValid(),
+      isDescriptionValid: this.isDescriptionValid(),
+      isAcountablePartnerValid: this.isAcountablePartnerValid()
     };
 
     return (
@@ -125,10 +197,12 @@ export default class CreateGoal extends Component {
             </Grid.Column>
           </Grid.Row>
           <GlobalForm
-            validations={{ isPenaltyValid }}
+            validations={validations}
             goal={this.state.goal}
             actions={actions}
             buttonName="Create"
+            errors={Object.values(this.state.errors)}
+            touched={this.state.touched}
           />
         </Grid>
       </Container>
