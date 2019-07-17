@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Table, List, Button } from "semantic-ui-react";
+import PropTypes from "prop-types";
 
 const Goal = props => {
   return (
@@ -107,3 +108,9 @@ export default class GoalsList extends Component {
     );
   }
 }
+
+GoalsList.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
+};

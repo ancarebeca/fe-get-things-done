@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Grid, Header, Container } from "semantic-ui-react";
 import GlobalForm from "./gobal-form";
+import PropTypes from "prop-types";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -134,3 +135,9 @@ export default class CreateGoal extends Component {
     );
   }
 }
+
+CreateGoal.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
+};

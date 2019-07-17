@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Form, Button } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
+import PropTypes from "prop-types";
 
 export default function GlobalForm({ validations, goal, actions, buttonName }) {
   return (
@@ -61,24 +62,29 @@ export default function GlobalForm({ validations, goal, actions, buttonName }) {
   );
 }
 
-// GlobalForm.propTypes = {
-//   goal: PropTypes.shape({
-//     color: PropTypes.string,
-//     fontSize: PropTypes.number
-//   }),
-//   action:PropTypes.shape({
-//     onChangeGoalAcountablePartner: PropTypes.func.isrequired,
-//     fontSize: PropTypes.number
-//   }),
-// };
+GlobalForm.propTypes = {
+  goal: PropTypes.shape({
+    user_name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    deadline: PropTypes.string.isRequired,
+    accountable_partner: PropTypes.string.isRequired,
+    penalty: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired
+  }),
 
-// GlobalForm.defaultProps = {
-//   goal: PropTypes.shape({
-//     color: PropTypes.string,
-//     fontSize: PropTypes.number
-//   }),
-//   action:PropTypes.shape({
-//     onChangeGoalAcountablePartner: () => {},
-//     fontSize: PropTypes.number
-//   }),
-// };
+  action: PropTypes.shape({
+    onChangeGoalUserName: PropTypes.func.isRequired,
+    onChangeGoalDescription: PropTypes.func.isRequired,
+    onChangeGoalDeadline: PropTypes.func.isRequired,
+    onChangeGoalAcountablePartner: PropTypes.func.isRequired,
+    onChangeGoalPenalty: PropTypes.func.isRequired,
+    onChangeGoalStatus: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
+  }),
+
+  validations: PropTypes.shape({
+    isPenaltyValid: PropTypes.bool.isRequired
+  }),
+
+  buttonName: PropTypes.string.isRequired
+};

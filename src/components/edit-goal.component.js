@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Grid, Header, Container } from "semantic-ui-react";
 import GlobalForm from "./gobal-form";
+import PropTypes from "prop-types";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -34,15 +35,15 @@ export default class EditGoal extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/goals/" + this.props.match.params.id)
+      .get(`http://localhost:4000/goals/${this.props.match.params.id}`)
       .then(response => {
         const goalRetrieved = {
-            user_name: response.data.goal_user_name,
-            description: response.data.goal_description,
-            deadline: new Date(response.data.goal_deadline),
-            accountable_partner: response.data.goal_accountable_partner,
-            penalty: response.data.goal_penalty,
-            status: response.data.goal_status
+          user_name: response.data.goal_user_name,
+          description: response.data.goal_description,
+          deadline: new Date(response.data.goal_deadline),
+          accountable_partner: response.data.goal_accountable_partner,
+          penalty: response.data.goal_penalty,
+          status: response.data.goal_status
         };
         this.setState({ goal: goalRetrieved });
       })
@@ -76,8 +77,8 @@ export default class EditGoal extends Component {
 
   onChangeGoalPenalty(e) {
     this.setState({
-        goal: { ...this.state.goal, penalty: e.target.value }
-      });
+      goal: { ...this.state.goal, penalty: e.target.value }
+    });
   }
 
   onChangeGoalStatus(e) {
@@ -147,3 +148,14 @@ export default class EditGoal extends Component {
     );
   }
 }
+
+EditGoal.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  })
+};
