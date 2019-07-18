@@ -114,17 +114,17 @@ GlobalForm.propTypes = {
   }),
 
   buttonName: PropTypes.string.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string),
-  touched: PropTypes.shape({
-    user_name: PropTypes.bool.isRequired,
-    description: PropTypes.bool.isRequired,
-    deadline: PropTypes.bool.isRequired,
-    accountable_partner: PropTypes.bool.isRequired,
-    penalty: PropTypes.bool.isRequired,
-    status: PropTypes.bool.isRequired
-  })
+  errors: PropTypes.arrayOf(PropTypes.string)
 };
 
 GlobalForm.defaultProps = {
-  errors: []
+  errors: [],
+  touched: PropTypes.shape({
+    user_name: false,
+    description: false,
+    deadline: false,
+    accountable_partner: false,
+    penalty: false,
+    status: false
+  })
 };

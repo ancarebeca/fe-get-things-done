@@ -18,6 +18,7 @@ export default class EditGoal extends Component {
     );
     this.onChangeGoalPenalty = this.onChangeGoalPenalty.bind(this);
     this.onChangeGoalStatus = this.onChangeGoalStatus.bind(this);
+    this.handleOnFocus = this.handleOnFocus.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -27,8 +28,17 @@ export default class EditGoal extends Component {
         description: "",
         deadline: new Date(),
         accountable_partner: "",
-        penalty: "",
+        penalty: "0",
         status: "new"
+      },
+      errors: {},
+      touched: {
+        user_name: false,
+        description: false,
+        deadline: false,
+        accountable_partner: false,
+        penalty: false,
+        status: false
       }
     };
   }
@@ -52,6 +62,10 @@ export default class EditGoal extends Component {
         console.log(error);
       });
   }
+
+  handleOnFocus = fieldName => e => {
+    this.setState({ touched: { ...this.state.touched, [fieldName]: true } });
+  };
 
   onChangeGoalUserName(e) {
     this.setState({ goal: { ...this.state.goal, user_name: e.target.value } });
@@ -89,6 +103,11 @@ export default class EditGoal extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+
+    if (!this.handleValidation()) {
+      return;
+    }
+
     const goalUpdated = {
       goal_user_name: this.state.goal.user_name,
       goal_description: this.state.goal.description,
@@ -113,10 +132,63 @@ export default class EditGoal extends Component {
     // Todo: handler error
   }
 
-  render() {
-    const isPenaltyValid =
+  handleValidation() {
+    let errors = {};
+    let formIsValid = true;
+    const touched = Object.keys(this.state.touched).reduce((acc, key) => {
+      acc[key] = true;
+      return acc;
+    }, {});
+
+    if (!this.isUsernameValid()) {
+      formIsValid = false;
+      errors["user_name"] = "Username cannot be empty";
+    }
+
+    if (!this.isAcountablePartnerValid()) {
+      formIsValid = false;
+      errors["accountablePartner"] = "Accountable partner cannot be empty";
+    }
+
+    if (!this.isDescriptionValid()) {
+      formIsValid = false;
+      errors["description"] = "Description cannot be empty";
+    }
+
+    if (!this.isPenaltyValid()) {
+      formIsValid = false;
+      errors["penalty"] = "Penalty has to be bigger than 0";
+    }
+
+    this.setState({ errors, touched });
+    return formIsValid;
+  }
+
+  isEmptyField(value) {
+    return !value || value === undefined || value === "" || value.length === 0;
+  }
+
+  isUsernameValid() {
+    return !this.isEmptyField(this.state.goal.user_name);
+  }
+
+  isDescriptionValid() {
+    const description = this.state.goal.description;
+    return !this.isEmptyField(description);
+  }
+
+  isPenaltyValid() {
+    return (
       0 < parseInt(this.state.goal.penalty, 10) &&
-      parseInt(this.state.goal.penalty, 10) < Infinity;
+      parseInt(this.state.goal.penalty, 10) < Infinity
+    );
+  }
+
+  isAcountablePartnerValid() {
+    return !this.isEmptyField(this.state.goal.accountable_partner);
+  }
+
+  render() {
     const actions = {
       onChangeGoalUserName: this.onChangeGoalUserName,
       onChangeGoalDescription: this.onChangeGoalDescription,
@@ -124,7 +196,14 @@ export default class EditGoal extends Component {
       onChangeGoalAcountablePartner: this.onChangeGoalAcountablePartner,
       onChangeGoalPenalty: this.onChangeGoalPenalty,
       onChangeGoalStatus: this.onChangeGoalStatus,
-      onSubmit: this.onSubmit
+      onSubmit: this.onSubmit,
+      onFocus: this.handleOnFocus
+    };
+    const validations = {
+      isPenaltyValid: this.isPenaltyValid(),
+      isUserNameValid: this.isUsernameValid(),
+      isDescriptionValid: this.isDescriptionValid(),
+      isAcountablePartnerValid: this.isAcountablePartnerValid()
     };
 
     return (
@@ -138,10 +217,12 @@ export default class EditGoal extends Component {
             </Grid.Column>
           </Grid.Row>
           <GlobalForm
-            validations={{ isPenaltyValid }}
+            validations={validations}
             goal={this.state.goal}
             actions={actions}
-            buttonName="Edit"
+            buttonName="Update"
+            errors={Object.values(this.state.errors)}
+            touched={this.state.touched}
           />
         </Grid>
       </Container>
