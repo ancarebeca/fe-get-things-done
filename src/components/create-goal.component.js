@@ -23,19 +23,19 @@ export default class CreateGoal extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       goal: {
-        user_name: "",
+        username: "",
         description: "",
         deadline: new Date(),
-        accountable_partner: "",
+        accountablePartner: "",
         penalty: "0",
         status: "new"
       },
       errors: {},
       touched: {
-        user_name: false,
+        username: false,
         description: false,
         deadline: false,
-        accountable_partner: false,
+        accountablePartner: false,
         penalty: false,
         status: false
       }
@@ -47,7 +47,7 @@ export default class CreateGoal extends Component {
   };
 
   onChangeGoalUserName(e) {
-    this.setState({ goal: { ...this.state.goal, user_name: e.target.value } });
+    this.setState({ goal: { ...this.state.goal, username: e.target.value } });
   }
 
   onChangeGoalDescription(e) {
@@ -64,7 +64,7 @@ export default class CreateGoal extends Component {
 
   onChangeGoalAcountablePartner(e) {
     this.setState({
-      goal: { ...this.state.goal, accountable_partner: e.target.value }
+      goal: { ...this.state.goal, accountablePartner: e.target.value }
     });
   }
 
@@ -88,10 +88,10 @@ export default class CreateGoal extends Component {
     }
 
     const newGoal = {
-      goal_user_name: this.state.goal.user_name,
+      goal_username: this.state.goal.username,
       goal_description: this.state.goal.description,
       goal_deadline: this.state.goal.deadline,
-      goal_accountable_partner: this.state.goal.accountable_partner,
+      goal_accountablePartner: this.state.goal.accountablePartner,
       goal_penalty: this.state.goal.penalty,
       goal_status: this.state.goal.status
     };
@@ -99,10 +99,10 @@ export default class CreateGoal extends Component {
     axios.post("http://localhost:4000/goals/add", newGoal).then(res => {
       this.setState({
         goal: {
-          user_name: "",
+          username: "",
           description: "",
           deadline: new Date(),
-          accountable_partner: "",
+          accountablePartner: "",
           penalty: "0",
           status: "new"
         }
@@ -122,7 +122,7 @@ export default class CreateGoal extends Component {
 
     if (!this.isUsernameValid()) {
       formIsValid = false;
-      errors["user_name"] = "Username cannot be empty";
+      errors["username"] = "Username cannot be empty";
     }
 
     if (!this.isAcountablePartnerValid()) {
@@ -149,7 +149,7 @@ export default class CreateGoal extends Component {
   }
 
   isUsernameValid() {
-    return !this.isEmptyField(this.state.goal.user_name);
+    return !this.isEmptyField(this.state.goal.username);
   }
 
   isDescriptionValid() {
@@ -165,7 +165,7 @@ export default class CreateGoal extends Component {
   }
 
   isAcountablePartnerValid() {
-    return !this.isEmptyField(this.state.goal.accountable_partner);
+    return !this.isEmptyField(this.state.goal.accountablePartner);
   }
 
   render() {
@@ -179,6 +179,7 @@ export default class CreateGoal extends Component {
       onSubmit: this.onSubmit,
       onFocus: this.handleOnFocus
     };
+    
     const validations = {
       isPenaltyValid: this.isPenaltyValid(),
       isUserNameValid: this.isUsernameValid(),

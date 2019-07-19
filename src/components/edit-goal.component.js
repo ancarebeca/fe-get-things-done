@@ -10,7 +10,7 @@ export default class EditGoal extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeGoalUserName = this.onChangeGoalUserName.bind(this);
+    this.onChangeGoalUsername = this.onChangeGoalUsername.bind(this);
     this.onChangeGoalDescription = this.onChangeGoalDescription.bind(this);
     this.onChangeGoalDeadline = this.onChangeGoalDeadline.bind(this);
     this.onChangeGoalAcountablePartner = this.onChangeGoalAcountablePartner.bind(
@@ -24,19 +24,19 @@ export default class EditGoal extends Component {
 
     this.state = {
       goal: {
-        user_name: "",
+        username: "",
         description: "",
         deadline: new Date(),
-        accountable_partner: "",
+        accountablePartner: "",
         penalty: "0",
         status: "new"
       },
       errors: {},
       touched: {
-        user_name: false,
+        username: false,
         description: false,
         deadline: false,
-        accountable_partner: false,
+        accountablePartner: false,
         penalty: false,
         status: false
       }
@@ -48,10 +48,10 @@ export default class EditGoal extends Component {
       .get(`http://localhost:4000/goals/${this.props.match.params.id}`)
       .then(response => {
         const goalRetrieved = {
-          user_name: response.data.goal_user_name,
+          username: response.data.goal_user_name,
           description: response.data.goal_description,
           deadline: new Date(response.data.goal_deadline),
-          accountable_partner: response.data.goal_accountable_partner,
+          accountablePartner: response.data.goal_accountable_partner,
           penalty: response.data.goal_penalty,
           status: response.data.goal_status
         };
@@ -67,8 +67,8 @@ export default class EditGoal extends Component {
     this.setState({ touched: { ...this.state.touched, [fieldName]: true } });
   };
 
-  onChangeGoalUserName(e) {
-    this.setState({ goal: { ...this.state.goal, user_name: e.target.value } });
+  onChangeGoalUsername(e) {
+    this.setState({ goal: { ...this.state.goal, username: e.target.value } });
   }
 
   onChangeGoalDescription(e) {
@@ -85,7 +85,7 @@ export default class EditGoal extends Component {
 
   onChangeGoalAcountablePartner(e) {
     this.setState({
-      goal: { ...this.state.goal, accountable_partner: e.target.value }
+      goal: { ...this.state.goal, accountablePartner: e.target.value }
     });
   }
 
@@ -109,16 +109,13 @@ export default class EditGoal extends Component {
     }
 
     const goalUpdated = {
-      goal_user_name: this.state.goal.user_name,
+      goal_user_name: this.state.goal.username,
       goal_description: this.state.goal.description,
       goal_deadline: this.state.goal.deadline,
-      goal_accountable_partner: this.state.goal.accountable_partner,
+      goal_accountable_partner: this.state.goal.accountablePartner,
       goal_penalty: this.state.goal.penalty,
       goal_status: this.state.goal.status
     };
-
-    console.log("Goal updated");
-    console.log(goalUpdated);
 
     axios
       .post(
@@ -142,7 +139,7 @@ export default class EditGoal extends Component {
 
     if (!this.isUsernameValid()) {
       formIsValid = false;
-      errors["user_name"] = "Username cannot be empty";
+      errors["username"] = "Username cannot be empty";
     }
 
     if (!this.isAcountablePartnerValid()) {
@@ -169,7 +166,7 @@ export default class EditGoal extends Component {
   }
 
   isUsernameValid() {
-    return !this.isEmptyField(this.state.goal.user_name);
+    return !this.isEmptyField(this.state.goal.username);
   }
 
   isDescriptionValid() {
@@ -185,12 +182,12 @@ export default class EditGoal extends Component {
   }
 
   isAcountablePartnerValid() {
-    return !this.isEmptyField(this.state.goal.accountable_partner);
+    return !this.isEmptyField(this.state.goal.accountablePartner);
   }
 
   render() {
     const actions = {
-      onChangeGoalUserName: this.onChangeGoalUserName,
+      onChangeGoalUsername: this.onChangeGoalUsername,
       onChangeGoalDescription: this.onChangeGoalDescription,
       onChangeGoalDeadline: this.onChangeGoalDeadline,
       onChangeGoalAcountablePartner: this.onChangeGoalAcountablePartner,
