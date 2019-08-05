@@ -7,10 +7,13 @@ import PropTypes from "prop-types";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class EditGoal extends Component {
+  getLoggedUser() {
+    return "Rebeca Mora";
+  }
+
   constructor(props) {
     super(props);
 
-    this.onChangeGoalUsername = this.onChangeGoalUsername.bind(this);
     this.onChangeGoalDescription = this.onChangeGoalDescription.bind(this);
     this.onChangeGoalDeadline = this.onChangeGoalDeadline.bind(this);
     this.onChangeGoalAcountablePartner = this.onChangeGoalAcountablePartner.bind(
@@ -24,7 +27,7 @@ export default class EditGoal extends Component {
 
     this.state = {
       goal: {
-        username: "",
+        username: this.getLoggedUser(),
         description: "",
         deadline: new Date(),
         accountablePartner: "",
@@ -47,6 +50,7 @@ export default class EditGoal extends Component {
     axios
       .get(`http://localhost:4000/goals/${this.props.match.params.id}`)
       .then(response => {
+        console.log(response.data);
         const goalRetrieved = {
           username: response.data.goal_user_name,
           description: response.data.goal_description,
@@ -66,10 +70,6 @@ export default class EditGoal extends Component {
   handleOnFocus = fieldName => e => {
     this.setState({ touched: { ...this.state.touched, [fieldName]: true } });
   };
-
-  onChangeGoalUsername(e) {
-    this.setState({ goal: { ...this.state.goal, username: e.target.value } });
-  }
 
   onChangeGoalDescription(e) {
     this.setState({
@@ -109,7 +109,7 @@ export default class EditGoal extends Component {
     }
 
     const goalUpdated = {
-      goal_user_name: this.state.goal.username,
+      goal_user_name: this.getLoggedUser(),
       goal_description: this.state.goal.description,
       goal_deadline: this.state.goal.deadline,
       goal_accountable_partner: this.state.goal.accountablePartner,
@@ -137,11 +137,6 @@ export default class EditGoal extends Component {
       return acc;
     }, {});
 
-    if (!this.isUsernameValid()) {
-      formIsValid = false;
-      errors["username"] = "Username cannot be empty";
-    }
-
     if (!this.isAcountablePartnerValid()) {
       formIsValid = false;
       errors["accountablePartner"] = "Accountable partner cannot be empty";
@@ -165,10 +160,6 @@ export default class EditGoal extends Component {
     return !value || value === undefined || value === "" || value.length === 0;
   }
 
-  isUsernameValid() {
-    return !this.isEmptyField(this.state.goal.username);
-  }
-
   isDescriptionValid() {
     const description = this.state.goal.description;
     return !this.isEmptyField(description);
@@ -187,7 +178,6 @@ export default class EditGoal extends Component {
 
   render() {
     const actions = {
-      onChangeGoalUsername: this.onChangeGoalUsername,
       onChangeGoalDescription: this.onChangeGoalDescription,
       onChangeGoalDeadline: this.onChangeGoalDeadline,
       onChangeGoalAcountablePartner: this.onChangeGoalAcountablePartner,
@@ -198,7 +188,6 @@ export default class EditGoal extends Component {
     };
     const validations = {
       isPenaltyValid: this.isPenaltyValid(),
-      isUserNameValid: this.isUsernameValid(),
       isDescriptionValid: this.isDescriptionValid(),
       isAcountablePartnerValid: this.isAcountablePartnerValid()
     };

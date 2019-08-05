@@ -16,19 +16,6 @@ export default function GlobalForm({
       <Grid.Column width={16}>
         <Form onSubmit={actions.onSubmit} error={errors.length > 0}>
           <Form.Field
-            error={!validations.isUserNameValid && touched["username"]}
-          >
-            <label>Username: </label>
-            <input
-              name="username"
-              id="username"
-              type="text"
-              value={goal.username}
-              onChange={actions.onChangeGoalUsername}
-              onFocus={actions.onFocus("username")}
-            />
-          </Form.Field>
-          <Form.Field
             error={!validations.isDescriptionValid && touched["description"]}
           >
             <label>Description: </label>
@@ -90,7 +77,6 @@ export default function GlobalForm({
 
 GlobalForm.propTypes = {
   goal: PropTypes.shape({
-    username: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     deadline: PropTypes.instanceOf(Date).isRequired,
     accountablePartner: PropTypes.string.isRequired,
@@ -99,7 +85,6 @@ GlobalForm.propTypes = {
   }),
 
   action: PropTypes.shape({
-    onChangeGoalUsername: PropTypes.func.isRequired,
     onChangeGoalDescription: PropTypes.func.isRequired,
     onChangeGoalDeadline: PropTypes.func.isRequired,
     onChangeGoalAcountablePartner: PropTypes.func.isRequired,
@@ -111,7 +96,6 @@ GlobalForm.propTypes = {
 
   validations: PropTypes.shape({
     isPenaltyValid: PropTypes.bool.isRequired,
-    isUserNameValid: PropTypes.bool.isRequired,
     isDescriptionValid: PropTypes.bool.isRequired,
     isAcountablePartnerValid: PropTypes.bool.isRequired
   }),
@@ -123,7 +107,6 @@ GlobalForm.propTypes = {
 GlobalForm.defaultProps = {
   errors: [],
   touched: PropTypes.shape({
-    username: false,
     description: false,
     deadline: false,
     accountablePartner: false,
@@ -131,4 +114,3 @@ GlobalForm.defaultProps = {
     status: false
   })
 };
-

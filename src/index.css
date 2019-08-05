@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.viewGoal {
+  display: grid;
+}
+
+tr.colorState.succesedState {
+  background: #fcfff5 !important;
+  color: #2c662d !important;
+}
+
+tr.colorState.failureState {
+  background: #fff6f6 !important;
+  color: #9f3a38 !important;
+}
+
+tr.colorState.waitingState {
+  background: #fffaf3 !important;
+  color: #573a08 !important;
+}
+
+tr.colorState.inProgressState {
+  background-color: #82bdea54 !important;
+  color: #1b1c1d !important;
+}

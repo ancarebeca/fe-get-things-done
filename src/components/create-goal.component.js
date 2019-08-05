@@ -7,10 +7,13 @@ import PropTypes from "prop-types";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class CreateGoal extends Component {
+  getLoggedUser() {
+    return "Rebeca Mora";
+  }
+
   constructor(props) {
     super(props);
 
-    this.onChangeGoalUserName = this.onChangeGoalUserName.bind(this);
     this.onChangeGoalDescription = this.onChangeGoalDescription.bind(this);
     this.onChangeGoalDeadline = this.onChangeGoalDeadline.bind(this);
     this.onChangeGoalAcountablePartner = this.onChangeGoalAcountablePartner.bind(
@@ -23,7 +26,7 @@ export default class CreateGoal extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       goal: {
-        username: "",
+        username: this.getLoggedUser(), //Todo: User logged
         description: "",
         deadline: new Date(),
         accountablePartner: "",
@@ -32,7 +35,6 @@ export default class CreateGoal extends Component {
       },
       errors: {},
       touched: {
-        username: false,
         description: false,
         deadline: false,
         accountablePartner: false,
@@ -45,10 +47,6 @@ export default class CreateGoal extends Component {
   handleOnFocus = fieldName => e => {
     this.setState({ touched: { ...this.state.touched, [fieldName]: true } });
   };
-
-  onChangeGoalUserName(e) {
-    this.setState({ goal: { ...this.state.goal, username: e.target.value } });
-  }
 
   onChangeGoalDescription(e) {
     this.setState({
@@ -88,7 +86,7 @@ export default class CreateGoal extends Component {
     }
 
     const newGoal = {
-      goal_username: this.state.goal.username,
+      goal_user_name: this.getLoggedUser(),
       goal_description: this.state.goal.description,
       goal_deadline: this.state.goal.deadline,
       goal_accountablePartner: this.state.goal.accountablePartner,
@@ -96,10 +94,11 @@ export default class CreateGoal extends Component {
       goal_status: this.state.goal.status
     };
 
+    console.log(newGoal);
     axios.post("http://localhost:4000/goals/add", newGoal).then(res => {
       this.setState({
         goal: {
-          username: "",
+          username: this.getLoggedUser(),
           description: "",
           deadline: new Date(),
           accountablePartner: "",
@@ -119,11 +118,6 @@ export default class CreateGoal extends Component {
       acc[key] = true;
       return acc;
     }, {});
-
-    if (!this.isUsernameValid()) {
-      formIsValid = false;
-      errors["username"] = "Username cannot be empty";
-    }
 
     if (!this.isAcountablePartnerValid()) {
       formIsValid = false;
@@ -170,7 +164,6 @@ export default class CreateGoal extends Component {
 
   render() {
     const actions = {
-      onChangeGoalUserName: this.onChangeGoalUserName,
       onChangeGoalDescription: this.onChangeGoalDescription,
       onChangeGoalDeadline: this.onChangeGoalDeadline,
       onChangeGoalAcountablePartner: this.onChangeGoalAcountablePartner,
@@ -179,10 +172,9 @@ export default class CreateGoal extends Component {
       onSubmit: this.onSubmit,
       onFocus: this.handleOnFocus
     };
-    
+
     const validations = {
       isPenaltyValid: this.isPenaltyValid(),
-      isUserNameValid: this.isUsernameValid(),
       isDescriptionValid: this.isDescriptionValid(),
       isAcountablePartnerValid: this.isAcountablePartnerValid()
     };

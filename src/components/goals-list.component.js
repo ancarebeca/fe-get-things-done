@@ -3,37 +3,74 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Table, List, Button } from "semantic-ui-react";
 import PropTypes from "prop-types";
+var dateFormat = require("dateformat");
+
+function getActions(props) {
+  if (props.goal.goal_status !== "new") {
+    return (
+      <List>
+        <List.Item>
+          <Link to={"/view/" + props.goal._id}>View</Link>
+        </List.Item>
+      </List>
+    );
+  } else {
+    return (
+      <List>
+        <List.Item>
+          <Link to={"/edit/" + props.goal._id}>Edit</Link>
+        </List.Item>
+        <List.Item>
+          <a onClick={props.onDelete}>Delete</a>
+        </List.Item>
+        <List.Item>
+          <Link to={"/view/" + props.goal._id}>View</Link>
+        </List.Item>
+      </List>
+    );
+  }
+}
+
+function getColorState(state) {
+  if (state === "Waiting for approval") {
+    return "waitingState";
+  }
+
+  if (state === "Succesed") {
+    return "succesedState";
+  }
+
+  if (state === "Failure") {
+    return "failureState";
+  }
+
+  if (state === "In progress") {
+    return "inProgressState";
+  }
+
+  return "defaultState";
+}
 
 const Goal = props => {
+  const deadlineFormatted = dateFormat(
+    new Date(props.goal.goal_deadline),
+    "dddd, mmmm dS, yyyy"
+  );
+
+  const color = getColorState(props.goal.goal_status);
   return (
-    <Table.Row>
-      <Table.Cell>
-        {props.goal.goal_user_name}
-      </Table.Cell>
+    <Table.Row className={`colorState ${color}`}>
       <Table.Cell>
         {props.goal.goal_description}
       </Table.Cell>
       <Table.Cell>
-        {props.goal.goal_deadline}
-      </Table.Cell>
-      <Table.Cell>
-        {props.goal.goal_accountable_partner}
-      </Table.Cell>
-      <Table.Cell>
-        {props.goal.goal_penalty}
+        {deadlineFormatted}
       </Table.Cell>
       <Table.Cell>
         {props.goal.goal_status}
       </Table.Cell>
       <Table.Cell>
-        <List>
-          <List.Item>
-            <Link to={"/edit/" + props.goal._id}>Edit</Link>
-          </List.Item>
-          <List.Item>
-            <a onClick={props.onDelete}>Delete</a>
-          </List.Item>
-        </List>
+        {getActions(props)}
       </Table.Cell>
     </Table.Row>
   );
@@ -80,22 +117,11 @@ export default class GoalsList extends Component {
   render() {
     return (
       <div>
-        <h3>Goals List</h3>
-        <div>
-          <Link to={"/create/"}>
-            <Button color="blue" size="small" floated="right">
-              New Goal
-            </Button>
-          </Link>
-        </div>
         <Table celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Username</Table.HeaderCell>
               <Table.HeaderCell>Description</Table.HeaderCell>
               <Table.HeaderCell>Deadline</Table.HeaderCell>
-              <Table.HeaderCell>Accountable Partner</Table.HeaderCell>
-              <Table.HeaderCell>Penalty</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>
             </Table.Row>
@@ -104,6 +130,13 @@ export default class GoalsList extends Component {
             {this.goalList()}
           </Table.Body>
         </Table>
+        <div>
+          <Link to={"/create/"}>
+            <Button color="blue" size="small" floated="right">
+              New goal
+            </Button>
+          </Link>
+        </div>
       </div>
     );
   }
