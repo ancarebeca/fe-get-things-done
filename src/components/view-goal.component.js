@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Header, Container, Table } from "semantic-ui-react";
+import { Header, Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,24 +16,27 @@ export default class ViewGoal extends Component {
         deadline: new Date(),
         accountablePartner: "",
         penalty: "0",
-        status: "new"
+        status: "new",
+        startedAt: new Date()
       }
     };
   }
-
-
 
   componentDidMount() {
     axios
       .get(`http://localhost:4000/goals/${this.props.match.params.id}`)
       .then(response => {
         const goalRetrieved = {
-          username: response.data.goal_user_name,
-          description: response.data.goal_description,
-          deadline: new Date(response.data.goal_deadline),
-          accountablePartner: response.data.goal_accountable_partner,
-          penalty: response.data.goal_penalty,
-          status: response.data.goal_status
+          username: response.data.username,
+          description: response.data.description,
+          startedAt:
+            response.data.startedAt === undefined
+              ? new Date()
+              : new Date(response.data.startedAt),
+          deadline: new Date(response.data.deadline),
+          accountablePartner: response.data.accountable_partner,
+          penalty: response.data.penalty,
+          status: response.data.status
         };
         this.setState({ goal: goalRetrieved });
       })
@@ -51,6 +54,11 @@ export default class ViewGoal extends Component {
       "dddd, mmmm dS, yyyy"
     );
 
+    const startedAtFormatted = dateFormat(
+      new Date(this.state.goal.startedAt),
+      "dddd, mmmm dS, yyyy"
+    );
+
     return (
       <div className="viewGoal">
         <Header as="h2" textAlign="center">
@@ -58,40 +66,49 @@ export default class ViewGoal extends Component {
         </Header>
 
         <Table basic="very" celled collapsing>
-          <Table.Row>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.Cell>
-              {this.state.goal.description}
-            </Table.Cell>
-          </Table.Row>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Description</Table.Cell>
+              <Table.Cell>
+                {this.state.goal.description}
+              </Table.Cell>
+            </Table.Row>
 
-          <Table.Row>
-            <Table.HeaderCell>Deadlines</Table.HeaderCell>
-            <Table.Cell>
-              {deadlineFormatted}
-            </Table.Cell>
-          </Table.Row>
+            <Table.Row>
+              <Table.Cell>Deadlines</Table.Cell>
+              <Table.Cell>
+                {deadlineFormatted}
+              </Table.Cell>
+            </Table.Row>
 
-          <Table.Row>
-            <Table.HeaderCell>Penalty</Table.HeaderCell>
-            <Table.Cell>
-              {this.state.goal.penalty}
-            </Table.Cell>
-          </Table.Row>
+            <Table.Row>
+              <Table.Cell>Started at:</Table.Cell>
+              <Table.Cell>
+                {startedAtFormatted}
+              </Table.Cell>
+            </Table.Row>
 
-          <Table.Row>
-            <Table.HeaderCell>Accountable Partner</Table.HeaderCell>
-            <Table.Cell>
-              {this.state.goal.accountablePartner}
-            </Table.Cell>
-          </Table.Row>
+            <Table.Row>
+              <Table.Cell>Penalty</Table.Cell>
+              <Table.Cell>
+                {this.state.goal.penalty}
+              </Table.Cell>
+            </Table.Row>
 
-          <Table.Row>
-            <Table.HeaderCell>Status</Table.HeaderCell>
-            <Table.Cell>
-              {this.state.goal.status}
-            </Table.Cell>
-          </Table.Row>
+            <Table.Row>
+              <Table.Cell>Accountable Partner</Table.Cell>
+              <Table.Cell>
+                {this.state.goal.accountablePartner}
+              </Table.Cell>
+            </Table.Row>
+
+            <Table.Row>
+              <Table.Cell>Status</Table.Cell>
+              <Table.Cell>
+                {this.state.goal.status}
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
         </Table>
       </div>
     );

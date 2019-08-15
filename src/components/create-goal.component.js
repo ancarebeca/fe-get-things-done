@@ -86,15 +86,14 @@ export default class CreateGoal extends Component {
     }
 
     const newGoal = {
-      goal_user_name: this.getLoggedUser(),
-      goal_description: this.state.goal.description,
-      goal_deadline: this.state.goal.deadline,
-      goal_accountablePartner: this.state.goal.accountablePartner,
-      goal_penalty: this.state.goal.penalty,
-      goal_status: this.state.goal.status
+      username: this.getLoggedUser(),
+      description: this.state.goal.description,
+      deadline: this.state.goal.deadline,
+      accountablePartner: this.state.goal.accountablePartner,
+      penalty: this.state.goal.penalty,
+      status: this.state.goal.status
     };
 
-    console.log(newGoal);
     axios.post("http://localhost:4000/goals/add", newGoal).then(res => {
       this.setState({
         goal: {

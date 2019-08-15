@@ -52,12 +52,12 @@ export default class EditGoal extends Component {
       .then(response => {
         console.log(response.data);
         const goalRetrieved = {
-          username: response.data.goal_user_name,
-          description: response.data.goal_description,
-          deadline: new Date(response.data.goal_deadline),
-          accountablePartner: response.data.goal_accountable_partner,
-          penalty: response.data.goal_penalty,
-          status: response.data.goal_status
+          username: response.data.username,
+          description: response.data.description,
+          deadline: new Date(response.data.deadline),
+          accountablePartner: response.data.accountablePartner,
+          penalty: response.data.penalty,
+          status: response.data.status
         };
         this.setState({ goal: goalRetrieved });
       })
@@ -109,12 +109,12 @@ export default class EditGoal extends Component {
     }
 
     const goalUpdated = {
-      goal_user_name: this.getLoggedUser(),
-      goal_description: this.state.goal.description,
-      goal_deadline: this.state.goal.deadline,
-      goal_accountable_partner: this.state.goal.accountablePartner,
-      goal_penalty: this.state.goal.penalty,
-      goal_status: this.state.goal.status
+      username: this.getLoggedUser(),
+      description: this.state.goal.description,
+      deadline: this.state.goal.deadline,
+      accountablePartner: this.state.goal.accountablePartner,
+      penalty: this.state.goal.penalty,
+      status: this.state.goal.status
     };
 
     axios

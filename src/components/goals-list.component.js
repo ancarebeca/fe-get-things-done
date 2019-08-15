@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 var dateFormat = require("dateformat");
 
 function getActions(props) {
-  if (props.goal.goal_status !== "new") {
+  if (props.goal.status !== "New") {
     return (
       <List>
         <List.Item>
@@ -32,11 +32,11 @@ function getActions(props) {
 }
 
 function getColorState(state) {
-  if (state === "Waiting for approval") {
+  if (state === "Waiting for score") {
     return "waitingState";
   }
 
-  if (state === "Succesed") {
+  if (state === "Succeeded") {
     return "succesedState";
   }
 
@@ -53,21 +53,21 @@ function getColorState(state) {
 
 const Goal = props => {
   const deadlineFormatted = dateFormat(
-    new Date(props.goal.goal_deadline),
+    new Date(props.goal.deadline),
     "dddd, mmmm dS, yyyy"
   );
 
-  const color = getColorState(props.goal.goal_status);
+  const color = getColorState(props.goal.status);
   return (
     <Table.Row className={`colorState ${color}`}>
       <Table.Cell>
-        {props.goal.goal_description}
+        {props.goal.description}
       </Table.Cell>
       <Table.Cell>
         {deadlineFormatted}
       </Table.Cell>
       <Table.Cell>
-        {props.goal.goal_status}
+        {props.goal.status}
       </Table.Cell>
       <Table.Cell>
         {getActions(props)}
