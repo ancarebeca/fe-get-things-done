@@ -5,7 +5,6 @@ import {
   Container,
   Menu,
   Dropdown,
-  Header,
   Button,
   Icon,
   Responsive
@@ -24,32 +23,29 @@ function MainHeader() {
     background-color: #2185d0;
   `;
 
-  const StyledButton = styled(Button)`
-  &&& {
-    background-color: #1f6fab;
-  }
-`;
-
-  return (
-    <Content>
-      <Responsive
-        as={StyledButton}
-        icon="bars"
-        minWidth={Responsive.onlyMobile.minWidth}
-        maxWidth={Responsive.onlyMobile.maxWidth}
-      />
-    </Content>
-  );
+  return <Content />;
 }
 
-class NavBarDesktop extends React.Component {
+// const StyledButton = styled(Button)`
+// &&& {
+//   background-color: #1f6fab;
+// }
+// `;
+
+/* <Responsive
+as={StyledButton}
+icon="bars"
+minWidth={Responsive.onlyMobile.minWidth} // Todo: adjust this values
+maxWidth={Responsive.onlyMobile.maxWidth} // Todo: adjust this values
+/> */
+
+class VerticalMenu extends React.Component {
   state = { activeItem: "account" };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
     const { activeItem } = this.state;
-
     return (
       <Menu secondary vertical fluid>
         <Menu.Item header name="my-goals">
@@ -78,6 +74,49 @@ class NavBarDesktop extends React.Component {
   }
 }
 
+class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { mobileMenuVisible: false };
+
+    this.handleClick = this.handleClick.bind(this);
+    this.closeMobileMenuOnUpdate = this.closeMobileMenuOnUpdate.bind(this);
+  }
+
+  handleClick() {
+    this.setState({ mobileMenuVisible: !this.state.mobileMenuVisible });
+  }
+
+  closeMobileMenuOnUpdate() {
+    this.setState({ mobileMenuVisible: false });
+  }
+
+  render() {
+    const menu = <VerticalMenu />;
+    return (
+      <div>
+        <Responsive
+          minWidth={Responsive.onlyMobile.minWidth} // Todo: adjust this values
+          maxWidth={Responsive.onlyMobile.maxWidth} // Todo: adjust this values
+        >
+          <Button icon onClick={this.handleClick}>
+            <Icon name="bars" />
+          </Button>
+          {this.state.mobileMenuVisible && menu}
+        </Responsive>
+
+        <Responsive
+          minWidth={Responsive.onlyComputer.minWidth} // Todo: adjust this values
+          maxWidth={Responsive.onlyComputer.maxWidth} // Todo: adjust this values
+          onUpdate={this.closeMobileMenuOnUpdate}
+        >
+          <VerticalMenu />
+        </Responsive>
+      </div>
+    );
+  }
+}
+
 function MainContent() {
   return (
     <div>
@@ -96,7 +135,7 @@ const GridExampleColumns = () =>
       <Grid>
         <Grid.Row>
           <Grid.Column width={4}>
-            <NavBarDesktop />
+            <NavBar />
           </Grid.Column>
           <Grid.Column width={12}>
             <MainContent />
