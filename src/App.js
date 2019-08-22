@@ -1,13 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
   Grid,
   Container,
   Menu,
-  Dropdown,
   Button,
   Icon,
-  Responsive
+  Responsive,
+  Header,
+  Divider
 } from "semantic-ui-react";
 import styled from "styled-components";
 import "semantic-ui-css/semantic.min.css";
@@ -18,63 +19,89 @@ import GoalsList from "./components/goals-list.component";
 import ViewGoal from "./components/view-goal.component";
 
 function MainHeader() {
-  const Content = styled.div`
+  const HeaderStyled = styled.div`
     height: 80px;
     background-color: #2185d0;
+    margin-bottom: 1%;
   `;
 
-  return <Content />;
+  const HeaderContainer = styled.div`
+    color: white;
+    h2 {
+      height: 80px;
+      line-height: 80px;
+      white-space: nowrap;
+    }
+  `;
+
+  return (
+    <HeaderStyled>
+      <Container>
+        <HeaderContainer>
+          <h2>
+            <Icon name="checked calendar" />Get Things Done!
+          </h2>
+        </HeaderContainer>
+      </Container>
+    </HeaderStyled>
+  );
 }
 
-// const StyledButton = styled(Button)`
-// &&& {
-//   background-color: #1f6fab;
-// }
-// `;
-
-/* <Responsive
-as={StyledButton}
-icon="bars"
-minWidth={Responsive.onlyMobile.minWidth} // Todo: adjust this values
-maxWidth={Responsive.onlyMobile.maxWidth} // Todo: adjust this values
-/> */
-
 class VerticalMenu extends React.Component {
-  state = { activeItem: "account" };
+  state = { activeItem: "Goals" };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
+    // Todo : Como quito  el link de <Link to="/">Goals</Link>
     const { activeItem } = this.state;
     return (
-      <Menu secondary vertical fluid>
-        <Menu.Item header name="my-goals">
-          <Link to="/">My goals</Link>
+      <Menu vertical fluid>
+        <Menu.Item
+          name="Goals"
+          active={activeItem === "Goals"}
+          onClick={this.handleItemClick}
+        >
+          <div>
+            <Icon name="trophy" />
+            Goals
+            {/* <Link to="/">Goals</Link>  */}
+          </div>
         </Menu.Item>
         <Menu.Item
-          name="account"
-          active={activeItem === "account"}
+          name="Reports"
+          active={activeItem === "Reports"}
           onClick={this.handleItemClick}
-        />
+        >
+          <div>
+            <Icon name="dashboard" />
+            Reports
+          </div>
+        </Menu.Item>
+
         <Menu.Item
-          name="settings"
-          active={activeItem === "settings"}
+          name="Logout"
+          active={activeItem === "Logout"}
           onClick={this.handleItemClick}
-        />
-        <Dropdown item text="Display Options">
-          <Dropdown.Menu>
-            <Dropdown.Header>Text Size</Dropdown.Header>
-            <Dropdown.Item>Small</Dropdown.Item>
-            <Dropdown.Item>Medium</Dropdown.Item>
-            <Dropdown.Item>Large</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        >
+          <div>
+            <Icon name="log out" />
+            Logout
+          </div>
+        </Menu.Item>
       </Menu>
     );
   }
 }
 
-class NavBar extends React.Component {
+const StyledGrid = styled(Grid)`
+  position: relative;
+  top: -60px;
+`;
+
+const StyledMenu = styled.div`margin-top: 60px;`;
+
+class MainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = { mobileMenuVisible: false };
@@ -92,32 +119,62 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const menu = <VerticalMenu />;
     return (
       <div>
+        {/* Mobile */}
         <Responsive
-          minWidth={Responsive.onlyMobile.minWidth} // Todo: adjust this values
-          maxWidth={Responsive.onlyMobile.maxWidth} // Todo: adjust this values
+          minWidth={Responsive.onlyMobile.minWidth}
+          maxWidth={Responsive.onlyTablet.maxWidth}
         >
-          <Button icon onClick={this.handleClick}>
-            <Icon name="bars" />
-          </Button>
-          {this.state.mobileMenuVisible && menu}
+          <StyledGrid stackable="true">
+            <Grid.Row>
+              <Grid.Column>
+                <Button
+                  icon
+                  size="small"
+                  floated="right"
+                  onClick={this.handleClick}
+                >
+                  <Icon name="bars" />
+                </Button>
+                {this.state.mobileMenuVisible &&
+                  <StyledMenu>
+                    <VerticalMenu />
+                  </StyledMenu>}
+              </Grid.Column>
+            </Grid.Row>
+            <Divider hidden />
+            <Grid.Row>
+              <Grid.Column>
+                <Content />
+              </Grid.Column>
+            </Grid.Row>
+          </StyledGrid>
         </Responsive>
 
+        {/* Tablet and Desktop */}
         <Responsive
-          minWidth={Responsive.onlyComputer.minWidth} // Todo: adjust this values
-          maxWidth={Responsive.onlyComputer.maxWidth} // Todo: adjust this values
+          minWidth={Responsive.onlyTablet.maxWidth}
           onUpdate={this.closeMobileMenuOnUpdate}
         >
-          <VerticalMenu />
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={4}>
+                <VerticalMenu />
+              </Grid.Column>
+
+              <Grid.Column width={12}>
+                <Content />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Responsive>
       </div>
     );
   }
 }
 
-function MainContent() {
+function Content() {
   return (
     <div>
       <Route path="/" exact component={GoalsList} />
@@ -132,16 +189,7 @@ const GridExampleColumns = () =>
   <Router>
     <MainHeader />
     <Container>
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={4}>
-            <NavBar />
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <MainContent />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <MainContent />
     </Container>
   </Router>;
 
