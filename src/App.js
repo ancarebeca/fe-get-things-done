@@ -7,7 +7,6 @@ import {
   Button,
   Icon,
   Responsive,
-  Header,
   Divider
 } from "semantic-ui-react";
 import styled from "styled-components";
