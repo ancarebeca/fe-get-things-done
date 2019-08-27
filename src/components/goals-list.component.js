@@ -60,6 +60,7 @@ export default class GoalsList extends Component {
     //   });
     const goals = [
       {
+        id: 1,
         username: "Paco",
         description: "Go to gym twice at week!!! ",
         deadline: new Date(),
@@ -68,6 +69,7 @@ export default class GoalsList extends Component {
         status: "new"
       },
       {
+        id: 2,
         username: "Paco",
         description: "Do not eat sugar!!! ",
         deadline: new Date(),
@@ -96,7 +98,7 @@ export default class GoalsList extends Component {
       );
 
       return (
-        <Item>
+        <Item key={currentGoal.id}>
           <Item.Content verticalAlign="middle">
             <Item.Header>
               {currentGoal.description}
