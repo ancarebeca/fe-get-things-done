@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {
   Grid,
   Container,
@@ -16,35 +16,22 @@ import CreateGoal from "./components/create-goal.component";
 import EditGoal from "./components/edit-goal.component";
 import GoalsList from "./components/goals-list.component";
 import ViewGoal from "./components/view-goal.component";
+import MainHeader from "./components/MainHeader";
 
-function MainHeader() {
-  const HeaderStyled = styled.div`
-    height: 80px;
-    background-color: #2185d0;
-    margin-bottom: 1%;
-  `;
 
-  const HeaderContainer = styled.div`
-    color: white;
-    h2 {
-      height: 80px;
-      line-height: 80px;
-      white-space: nowrap;
-    }
-  `;
+const StyledLink = styled(Link)`
+  color: black;
+  :hover {
+    color: black;
+  }
+`
 
-  return (
-    <HeaderStyled>
-      <Container>
-        <HeaderContainer>
-          <h2>
-            <Icon name="checked calendar" />Get Things Done!
-          </h2>
-        </HeaderContainer>
-      </Container>
-    </HeaderStyled>
-  );
-}
+const StyledVerticalMenuIcon = styled(Icon)`
+  &&& {
+    margin-right: 1em;
+  }
+
+`
 
 class VerticalMenu extends React.Component {
   state = { activeItem: "Goals" };
@@ -52,7 +39,6 @@ class VerticalMenu extends React.Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
-    // Todo : Como quito  el link de <Link to="/">Goals</Link>
     const { activeItem } = this.state;
     return (
       <Menu vertical fluid>
@@ -62,9 +48,8 @@ class VerticalMenu extends React.Component {
           onClick={this.handleItemClick}
         >
           <div>
-            <Icon name="trophy" />
-            Goals
-            {/* <Link to="/">Goals</Link>  */}
+            <StyledVerticalMenuIcon name="trophy" />
+            <StyledLink to="/">Goals</StyledLink>
           </div>
         </Menu.Item>
         <Menu.Item
@@ -73,7 +58,7 @@ class VerticalMenu extends React.Component {
           onClick={this.handleItemClick}
         >
           <div>
-            <Icon name="dashboard" />
+            <StyledVerticalMenuIcon name="dashboard" />
             Reports
           </div>
         </Menu.Item>
@@ -84,7 +69,7 @@ class VerticalMenu extends React.Component {
           onClick={this.handleItemClick}
         >
           <div>
-            <Icon name="log out" />
+            <StyledVerticalMenuIcon name="log out" />
             Logout
           </div>
         </Menu.Item>
@@ -117,9 +102,13 @@ class MainContent extends React.Component {
     this.setState({ mobileMenuVisible: false });
   }
 
+
+
   render() {
+
+
     return (
-      <div>
+      <>
         {/* Mobile */}
         <Responsive
           minWidth={Responsive.onlyMobile.minWidth}
@@ -168,7 +157,7 @@ class MainContent extends React.Component {
             </Grid.Row>
           </Grid>
         </Responsive>
-      </div>
+      </>
     );
   }
 }
@@ -184,16 +173,14 @@ function Content() {
   );
 }
 
-const GridExampleColumns = () =>
+export default function App() {
+  return (
   <Router>
     <MainHeader />
     <Container>
       <MainContent />
     </Container>
-  </Router>;
-
-function App() {
-  return GridExampleColumns(); // todo: sustituir por el codigo
+    </Router>
+  );
 }
 
-export default App;
