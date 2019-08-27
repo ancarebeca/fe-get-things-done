@@ -158,11 +158,11 @@ class MainContent extends React.Component {
         >
           <Grid>
             <Grid.Row>
-              <Grid.Column width={4}>
+              <Grid.Column width={2}>
                 <VerticalMenu />
               </Grid.Column>
 
-              <Grid.Column width={12}>
+              <Grid.Column width={14}>
                 <Content />
               </Grid.Column>
             </Grid.Row>
