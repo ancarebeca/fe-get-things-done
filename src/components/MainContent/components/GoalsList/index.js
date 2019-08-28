@@ -1,43 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import {
-  Table,
-  List,
-  Segment,
-  Item,
-  Button,
-  Label,
-  Icon
-} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-var dateFormat = require('dateformat');
+import { Link } from 'react-router-dom';
 
-// function getActions(props) {
-//   if (props.goal.status !== "New") {
-//     return (
-//       <List>
-//         <List.Item>
-//           <Link to={"/view/" + props.goal._id}>View</Link>
-//         </List.Item>
-//       </List>
-//     );
-//   } else {
-//     return (
-//       <List>
-//         <List.Item>
-//           <Link to={"/edit/" + props.goal._id}>Edit</Link>
-//         </List.Item>
-//         <List.Item>
-//           <a onClick={props.onDelete}>Delete</a>
-//         </List.Item>
-//         <List.Item>
-//           <Link to={"/view/" + props.goal._id}>View</Link>
-//         </List.Item>
-//       </List>
-//     );
-//   }
-// }
+import axios from 'axios';
+import { Segment, Item, Button, Label, Icon } from 'semantic-ui-react';
+var dateFormat = require('dateformat');
 
 export default class GoalsList extends Component {
   constructor(props) {
@@ -90,11 +57,11 @@ export default class GoalsList extends Component {
   };
 
   goalList = () => {
-    const onDelete = this.onDelete;
+    // const onDelete = this.onDelete;
     return this.state.goals.map(function(currentGoal) {
       const deadlineFormatted = dateFormat(
         new Date(currentGoal.deadline),
-        'dddd, mmmm dS, yyyy'
+        'mmmm dS, yyyy'
       );
 
       return (
@@ -105,8 +72,12 @@ export default class GoalsList extends Component {
               <Label color="green" horizontal>
                 Succeeded
               </Label>
-              <Icon name="calendar" /> {deadlineFormatted}
-              <Button floated="right">Show</Button>
+              <Icon name="calendar"></Icon> {deadlineFormatted}
+              <Link to={'/show/' + currentGoal._id}>
+                <Button color="blue" floated="right">
+                  Show
+                </Button>
+              </Link>
             </Item.Extra>
           </Item.Content>
         </Item>
@@ -122,6 +93,32 @@ export default class GoalsList extends Component {
     );
   }
 }
+
+// function getActions(props) {
+//   if (props.goal.status !== "New") {
+//     return (
+//       <List>
+//         <List.Item>
+//           <Link to={"/view/" + props.goal._id}>View</Link>
+//         </List.Item>
+//       </List>
+//     );
+//   } else {
+//     return (
+//       <List>
+//         <List.Item>
+//           <Link to={"/edit/" + props.goal._id}>Edit</Link>
+//         </List.Item>
+//         <List.Item>
+//           <a onClick={props.onDelete}>Delete</a>
+//         </List.Item>
+//         <List.Item>
+//           <Link to={"/view/" + props.goal._id}>View</Link>
+//         </List.Item>
+//       </List>
+//     );
+//   }
+// }
 
 GoalsList.propTypes = {
   history: PropTypes.shape({
