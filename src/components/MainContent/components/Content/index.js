@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import CreateGoal from '../../../create-goal.component';
-import EditGoal from '../../../edit-goal.component';
+import CreateGoal from '../CreateGoal';
+import EditGoal from '../EditGoal';
 import GoalsList from '../GoalsList';
 import ShowGoal from '../ShowGoal';
 

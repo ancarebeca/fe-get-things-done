@@ -1,6 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Grid, Button, Icon, Responsive, Divider } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import {
+  Grid,
+  Button,
+  Icon,
+  Responsive,
+  Divider,
+  Segment
+} from 'semantic-ui-react';
 import styled from 'styled-components';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -80,7 +87,9 @@ export default class MainContent extends React.Component {
               </Grid.Column>
 
               <Grid.Column width={14}>
-                <Content />
+                <Grid.Row>
+                  <Content />
+                </Grid.Row>
               </Grid.Column>
             </Grid.Row>
           </Grid>

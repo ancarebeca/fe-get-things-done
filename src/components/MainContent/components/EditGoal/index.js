@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Grid, Header, Container } from 'semantic-ui-react';
-import GlobalForm from './gobal-form';
+import GlobalForm from '../GlobaForm';
 import PropTypes from 'prop-types';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default class EditGoal extends Component {
-  getLoggedUser() {
-    return 'Rebeca Mora';
-  }
-
   constructor(props) {
     super(props);
 
@@ -27,7 +23,7 @@ export default class EditGoal extends Component {
 
     this.state = {
       goal: {
-        username: this.getLoggedUser(),
+        username: '',
         description: '',
         deadline: new Date(),
         accountablePartner: '',
@@ -193,25 +189,14 @@ export default class EditGoal extends Component {
     };
 
     return (
-      <Container>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Header as="h2" textAlign="center">
-                Update Goal
-              </Header>
-            </Grid.Column>
-          </Grid.Row>
-          <GlobalForm
-            validations={validations}
-            goal={this.state.goal}
-            actions={actions}
-            buttonName="Update"
-            errors={Object.values(this.state.errors)}
-            touched={this.state.touched}
-          />
-        </Grid>
-      </Container>
+      <GlobalForm
+        validations={validations}
+        goal={this.state.goal}
+        actions={actions}
+        buttonName="Update"
+        errors={Object.values(this.state.errors)}
+        touched={this.state.touched}
+      />
     );
   }
 }
