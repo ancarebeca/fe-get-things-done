@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Header, Table } from "semantic-ui-react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Header, Table } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default class ViewGoal extends Component {
   constructor(props) {
@@ -11,12 +11,12 @@ export default class ViewGoal extends Component {
 
     this.state = {
       goal: {
-        username: "",
-        description: "",
+        username: '',
+        description: '',
         deadline: new Date(),
-        accountablePartner: "",
-        penalty: "0",
-        status: "new",
+        accountablePartner: '',
+        penalty: '0',
+        status: 'new',
         startedAt: new Date()
       }
     };
@@ -47,16 +47,16 @@ export default class ViewGoal extends Component {
   }
 
   render() {
-    var dateFormat = require("dateformat");
+    var dateFormat = require('dateformat');
 
     const deadlineFormatted = dateFormat(
       new Date(this.state.goal.deadline),
-      "dddd, mmmm dS, yyyy"
+      'dddd, mmmm dS, yyyy'
     );
 
     const startedAtFormatted = dateFormat(
       new Date(this.state.goal.startedAt),
-      "dddd, mmmm dS, yyyy"
+      'dddd, mmmm dS, yyyy'
     );
 
     return (
@@ -69,44 +69,32 @@ export default class ViewGoal extends Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell>Description</Table.Cell>
-              <Table.Cell>
-                {this.state.goal.description}
-              </Table.Cell>
+              <Table.Cell>{this.state.goal.description}</Table.Cell>
             </Table.Row>
 
             <Table.Row>
               <Table.Cell>Deadlines</Table.Cell>
-              <Table.Cell>
-                {deadlineFormatted}
-              </Table.Cell>
+              <Table.Cell>{deadlineFormatted}</Table.Cell>
             </Table.Row>
 
             <Table.Row>
               <Table.Cell>Started at:</Table.Cell>
-              <Table.Cell>
-                {startedAtFormatted}
-              </Table.Cell>
+              <Table.Cell>{startedAtFormatted}</Table.Cell>
             </Table.Row>
 
             <Table.Row>
               <Table.Cell>Penalty</Table.Cell>
-              <Table.Cell>
-                {this.state.goal.penalty}
-              </Table.Cell>
+              <Table.Cell>{this.state.goal.penalty}</Table.Cell>
             </Table.Row>
 
             <Table.Row>
               <Table.Cell>Accountable Partner</Table.Cell>
-              <Table.Cell>
-                {this.state.goal.accountablePartner}
-              </Table.Cell>
+              <Table.Cell>{this.state.goal.accountablePartner}</Table.Cell>
             </Table.Row>
 
             <Table.Row>
               <Table.Cell>Status</Table.Cell>
-              <Table.Cell>
-                {this.state.goal.status}
-              </Table.Cell>
+              <Table.Cell>{this.state.goal.status}</Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>

@@ -1,6 +1,6 @@
-import React from "react";
-import CreateGoal from "./../create-goal.component";
-import { shallow } from "enzyme";
+import React from 'react';
+import CreateGoal from './../create-goal.component';
+import { shallow } from 'enzyme';
 
 const emptyFunction = () => {};
 
@@ -14,10 +14,10 @@ function setUp(props = {}) {
   return shallow(<CreateGoal {...defaultProps} {...props} />);
 }
 
-describe("<CreateGoal/>", () => {
-  it("handles on change succesfully", () => {
+describe('<CreateGoal/>', () => {
+  it('handles on change succesfully', () => {
     const wrapper = setUp();
-    const actions = wrapper.find("GlobalForm").props().actions;
+    const actions = wrapper.find('GlobalForm').props().actions;
     expect();
   });
 });

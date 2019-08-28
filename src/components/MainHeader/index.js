@@ -1,7 +1,7 @@
-import React from "react";
-import { Container, Icon } from "semantic-ui-react";
-import styled from "styled-components";
-import "semantic-ui-css/semantic.min.css";
+import React from 'react';
+import { Container, Icon } from 'semantic-ui-react';
+import styled from 'styled-components';
+import 'semantic-ui-css/semantic.min.css';
 
 const StyledContainer = styled.div`
   height: 80px;
@@ -24,7 +24,8 @@ export default function MainHeader() {
       <Container>
         <HeaderContent>
           <h2>
-            <Icon name="checked calendar" />Get Things Done!
+            <Icon name="checked calendar" />
+            Get Things Done!
           </h2>
         </HeaderContent>
       </Container>

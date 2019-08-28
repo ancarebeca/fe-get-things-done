@@ -1,10 +1,10 @@
-import React from "react";
-import { Route } from "react-router-dom";
+import React from 'react';
+import { Route } from 'react-router-dom';
 
-import CreateGoal from "../../../create-goal.component";
-import EditGoal from "../../../edit-goal.component";
-import GoalsList from "../../../goals-list.component";
-import ViewGoal from "../../../view-goal.component";
+import CreateGoal from '../../../create-goal.component';
+import EditGoal from '../../../edit-goal.component';
+import GoalsList from '../../../goals-list.component';
+import ViewGoal from '../../../view-goal.component';
 
 export default function Content() {
   return (

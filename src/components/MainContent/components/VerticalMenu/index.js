@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Menu, Icon } from "semantic-ui-react";
-import styled from "styled-components";
-import "semantic-ui-css/semantic.min.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, Icon } from 'semantic-ui-react';
+import styled from 'styled-components';
+import 'semantic-ui-css/semantic.min.css';
 
 const StyledLink = styled(Link)`
   color: black;
@@ -15,11 +15,10 @@ const StyledVerticalMenuIcon = styled(Icon)`
   &&& {
     margin-right: 1em;
   }
-
 `;
 
 export default class VerticalMenu extends React.Component {
-  state = { activeItem: "Goals" };
+  state = { activeItem: 'Goals' };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
@@ -31,7 +30,7 @@ export default class VerticalMenu extends React.Component {
           as={StyledLink}
           to="/"
           name="Goals"
-          active={activeItem === "Goals"}
+          active={activeItem === 'Goals'}
           onClick={this.handleItemClick}
         >
           <div>
@@ -41,7 +40,7 @@ export default class VerticalMenu extends React.Component {
         </Menu.Item>
         <Menu.Item
           name="Reports"
-          active={activeItem === "Reports"}
+          active={activeItem === 'Reports'}
           onClick={this.handleItemClick}
         >
           <div>
@@ -52,7 +51,7 @@ export default class VerticalMenu extends React.Component {
 
         <Menu.Item
           name="Logout"
-          active={activeItem === "Logout"}
+          active={activeItem === 'Logout'}
           onClick={this.handleItemClick}
         >
           <div>

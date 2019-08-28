@@ -1,14 +1,15 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Grid, Header, Container } from "semantic-ui-react";
-import GlobalForm from "./gobal-form";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import "react-datepicker/dist/react-datepicker.css";
+import axios from 'axios';
+import { Grid, Header, Container } from 'semantic-ui-react';
+import GlobalForm from './gobal-form';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default class CreateGoal extends Component {
   getLoggedUser() {
-    return "Rebeca Mora";
+    return 'Rebeca Mora';
   }
 
   constructor(props) {
@@ -27,11 +28,11 @@ export default class CreateGoal extends Component {
     this.state = {
       goal: {
         username: this.getLoggedUser(), //Todo: User logged
-        description: "",
+        description: '',
         deadline: new Date(),
-        accountablePartner: "",
-        penalty: "0",
-        status: "new"
+        accountablePartner: '',
+        penalty: '0',
+        status: 'new'
       },
       errors: {},
       touched: {
@@ -94,18 +95,18 @@ export default class CreateGoal extends Component {
       status: this.state.goal.status
     };
 
-    axios.post("http://localhost:4000/goals/add", newGoal).then(res => {
+    axios.post('http://localhost:4000/goals/add', newGoal).then(res => {
       this.setState({
         goal: {
           username: this.getLoggedUser(),
-          description: "",
+          description: '',
           deadline: new Date(),
-          accountablePartner: "",
-          penalty: "0",
-          status: "new"
+          accountablePartner: '',
+          penalty: '0',
+          status: 'new'
         }
       });
-      this.props.history.push("/");
+      this.props.history.push('/');
       console.log(res.data);
     });
   }
@@ -120,17 +121,17 @@ export default class CreateGoal extends Component {
 
     if (!this.isAcountablePartnerValid()) {
       formIsValid = false;
-      errors["accountablePartner"] = "Accountable partner cannot be empty";
+      errors['accountablePartner'] = 'Accountable partner cannot be empty';
     }
 
     if (!this.isDescriptionValid()) {
       formIsValid = false;
-      errors["description"] = "Description cannot be empty";
+      errors['description'] = 'Description cannot be empty';
     }
 
     if (!this.isPenaltyValid()) {
       formIsValid = false;
-      errors["penalty"] = "Penalty has to be bigger than 0";
+      errors['penalty'] = 'Penalty has to be bigger than 0';
     }
 
     this.setState({ errors, touched });
@@ -138,7 +139,7 @@ export default class CreateGoal extends Component {
   }
 
   isEmptyField(value) {
-    return !value || value === undefined || value === "" || value.length === 0;
+    return !value || value === undefined || value === '' || value.length === 0;
   }
 
   isUsernameValid() {

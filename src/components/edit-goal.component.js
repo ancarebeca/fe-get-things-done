@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Grid, Header, Container } from "semantic-ui-react";
-import GlobalForm from "./gobal-form";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Grid, Header, Container } from 'semantic-ui-react';
+import GlobalForm from './gobal-form';
+import PropTypes from 'prop-types';
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default class EditGoal extends Component {
   getLoggedUser() {
-    return "Rebeca Mora";
+    return 'Rebeca Mora';
   }
 
   constructor(props) {
@@ -28,11 +28,11 @@ export default class EditGoal extends Component {
     this.state = {
       goal: {
         username: this.getLoggedUser(),
-        description: "",
+        description: '',
         deadline: new Date(),
-        accountablePartner: "",
-        penalty: "0",
-        status: "new"
+        accountablePartner: '',
+        penalty: '0',
+        status: 'new'
       },
       errors: {},
       touched: {
@@ -119,12 +119,12 @@ export default class EditGoal extends Component {
 
     axios
       .post(
-        "http://localhost:4000/goals/update/" + this.props.match.params.id,
+        'http://localhost:4000/goals/update/' + this.props.match.params.id,
         goalUpdated
       )
       .then(res => {
         console.log(res.data);
-        this.props.history.push("/");
+        this.props.history.push('/');
       });
     // Todo: handler error
   }
@@ -139,17 +139,17 @@ export default class EditGoal extends Component {
 
     if (!this.isAcountablePartnerValid()) {
       formIsValid = false;
-      errors["accountablePartner"] = "Accountable partner cannot be empty";
+      errors['accountablePartner'] = 'Accountable partner cannot be empty';
     }
 
     if (!this.isDescriptionValid()) {
       formIsValid = false;
-      errors["description"] = "Description cannot be empty";
+      errors['description'] = 'Description cannot be empty';
     }
 
     if (!this.isPenaltyValid()) {
       formIsValid = false;
-      errors["penalty"] = "Penalty has to be bigger than 0";
+      errors['penalty'] = 'Penalty has to be bigger than 0';
     }
 
     this.setState({ errors, touched });
@@ -157,7 +157,7 @@ export default class EditGoal extends Component {
   }
 
   isEmptyField(value) {
-    return !value || value === undefined || value === "" || value.length === 0;
+    return !value || value === undefined || value === '' || value.length === 0;
   }
 
   isDescriptionValid() {

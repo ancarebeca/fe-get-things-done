@@ -1,7 +1,7 @@
-import React from "react";
-import { Grid, Form, Button, Message } from "semantic-ui-react";
-import DatePicker from "react-datepicker";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Grid, Form, Button, Message } from 'semantic-ui-react';
+import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
 
 export default function GlobalForm({
   validations,
@@ -16,7 +16,7 @@ export default function GlobalForm({
       <Grid.Column width={16}>
         <Form onSubmit={actions.onSubmit} error={errors.length > 0}>
           <Form.Field
-            error={!validations.isDescriptionValid && touched["description"]}
+            error={!validations.isDescriptionValid && touched['description']}
           >
             <label>Description: </label>
             <input
@@ -25,7 +25,7 @@ export default function GlobalForm({
               type="text"
               value={goal.description}
               onChange={actions.onChangeGoalDescription}
-              onFocus={actions.onFocus("description")}
+              onFocus={actions.onFocus('description')}
             />
           </Form.Field>
           <Form.Field>
@@ -41,7 +41,7 @@ export default function GlobalForm({
           <Form.Field
             error={
               !validations.isAcountablePartnerValid &&
-              touched["accountablePartner"]
+              touched['accountablePartner']
             }
           >
             <label>Accountable Partner: </label>
@@ -51,16 +51,16 @@ export default function GlobalForm({
               name="accountablePartner"
               value={goal.accountablePartner}
               onChange={actions.onChangeGoalAcountablePartner}
-              onFocus={actions.onFocus("accountablePartner")}
+              onFocus={actions.onFocus('accountablePartner')}
             />
           </Form.Field>
-          <Form.Field error={!validations.isPenaltyValid && touched["penalty"]}>
+          <Form.Field error={!validations.isPenaltyValid && touched['penalty']}>
             <label>Penalty: </label>
             <input
               type="text"
               value={goal.penalty}
               onChange={actions.onChangeGoalPenalty}
-              onFocus={actions.onFocus("penalty")}
+              onFocus={actions.onFocus('penalty')}
             />
           </Form.Field>
           <Message

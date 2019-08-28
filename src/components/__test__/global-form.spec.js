@@ -1,6 +1,6 @@
-import React from "react";
-import GlobalForm from "./../gobal-form";
-import { shallow } from "enzyme";
+import React from 'react';
+import GlobalForm from './../gobal-form';
+import { shallow } from 'enzyme';
 
 const emptyFunction = () => {};
 
@@ -31,30 +31,30 @@ const defaultProps = {
     status: false
   },
   goal: {
-    username: "Manuel",
-    description: "Go to gym twice at week",
+    username: 'Manuel',
+    description: 'Go to gym twice at week',
     deadline: new Date(),
-    accountablePartner: "Rebeca",
-    penalty: "5",
-    status: "New"
+    accountablePartner: 'Rebeca',
+    penalty: '5',
+    status: 'New'
   },
-  buttonName: "Create"
+  buttonName: 'Create'
 };
 
 function setUp(props = {}) {
   return shallow(<GlobalForm {...defaultProps} {...props} />);
 }
 
-describe("<GlobalForm/>", () => {
-  it("handles on change succesfully", () => {
+describe('<GlobalForm/>', () => {
+  it('handles on change succesfully', () => {
     var today = new Date();
     var tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
     const fieldNames = {
-      username: "Rebeca",
-      description: "Go to gym twice at week",
+      username: 'Rebeca',
+      description: 'Go to gym twice at week',
       dealdline: tomorrow,
-      accountablePartner: "Manuel"
+      accountablePartner: 'Manuel'
     };
 
     const onChangeFake = jest.fn();
@@ -73,7 +73,7 @@ describe("<GlobalForm/>", () => {
 
     Object.keys(fieldNames).forEach(function(name) {
       const usernameField = wrapper.find(`[name="${name}"]`);
-      usernameField.simulate("change", {
+      usernameField.simulate('change', {
         target: { value: fieldNames[name] }
       });
 
@@ -83,34 +83,37 @@ describe("<GlobalForm/>", () => {
     });
   });
 
-  it("handles on submit", () => {
+  it('handles on submit', () => {
     const onSubmit = jest.fn();
     const wrapper = setUp({
       actions: { ...defaultProps.actions, onSubmit }
     });
-    wrapper.find("Form").props().onSubmit();
+    wrapper
+      .find('Form')
+      .props()
+      .onSubmit();
     expect(onSubmit).toHaveBeenCalled();
   });
 
-  it("renders errors message when form contains some errors", () => {
-    const errors = ["Some forms fields are invalid"];
+  it('renders errors message when form contains some errors', () => {
+    const errors = ['Some forms fields are invalid'];
     const wrapper = setUp({
       errors
     });
-    wrapper.find("Message");
+    wrapper.find('Message');
 
-    expect(wrapper.find("Message").props()).toMatchObject({
+    expect(wrapper.find('Message').props()).toMatchObject({
       error: true,
-      header: "There was some errors with your submission",
+      header: 'There was some errors with your submission',
       list: errors
     });
   });
 
-  it("handles on focus", () => {
+  it('handles on focus', () => {
     const fieldNames = {
-      username: "Rebeca",
-      description: "Go to gym twice at week",
-      accountablePartner: "Manuel"
+      username: 'Rebeca',
+      description: 'Go to gym twice at week',
+      accountablePartner: 'Manuel'
     };
 
     const fieldTouched = [];
@@ -127,7 +130,7 @@ describe("<GlobalForm/>", () => {
 
     Object.keys(fieldNames).forEach(function(name) {
       const fieldName = wrapper.find(`[name="${name}"]`);
-      fieldName.simulate("focus", {
+      fieldName.simulate('focus', {
         target: { value: fieldNames[name] }
       });
 
@@ -139,7 +142,7 @@ describe("<GlobalForm/>", () => {
     });
   });
 
-  it("does not render field error when validations succeded and inputs are touched", () => {
+  it('does not render field error when validations succeded and inputs are touched', () => {
     const touched = {
       username: true,
       description: true,
@@ -161,13 +164,13 @@ describe("<GlobalForm/>", () => {
       validations
     });
 
-    wrapper.find("input").forEach(input => {
+    wrapper.find('input').forEach(input => {
       expect(input.parent().props().error).not.toBeUndefined();
       expect(input.parent().props().error).toBe(false);
     });
   });
 
-  it("does not render field error when validations succeded and input are not touched", () => {
+  it('does not render field error when validations succeded and input are not touched', () => {
     const touched = {
       username: false,
       description: false,
@@ -189,13 +192,13 @@ describe("<GlobalForm/>", () => {
       validations
     });
 
-    wrapper.find("input").forEach(input => {
+    wrapper.find('input').forEach(input => {
       expect(input.parent().props().error).not.toBeUndefined();
       expect(input.parent().props().error).toBe(false);
     });
   });
 
-  it("renders field errors when validations are failed and input are touched", () => {
+  it('renders field errors when validations are failed and input are touched', () => {
     const touched = {
       username: true,
       description: true,
@@ -217,13 +220,13 @@ describe("<GlobalForm/>", () => {
       validations
     });
 
-    wrapper.find("input").forEach(input => {
+    wrapper.find('input').forEach(input => {
       expect(input.parent().props().error).not.toBeUndefined();
       expect(input.parent().props().error).toBe(true);
     });
   });
 
-  it("renders field errors when validations are failed and input are not touched", () => {
+  it('renders field errors when validations are failed and input are not touched', () => {
     const touched = {
       username: false,
       description: false,
@@ -244,7 +247,7 @@ describe("<GlobalForm/>", () => {
       validations
     });
 
-    wrapper.find("input").forEach(input => {
+    wrapper.find('input').forEach(input => {
       expect(input.parent().props().error).not.toBeUndefined();
       expect(input.parent().props().error).toBe(false);
     });

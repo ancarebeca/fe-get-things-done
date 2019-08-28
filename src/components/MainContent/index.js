@@ -1,25 +1,20 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {
-  Grid,
-  Button,
-  Icon,
-  Responsive,
-  Divider
-} from "semantic-ui-react";
-import styled from "styled-components";
-import "semantic-ui-css/semantic.min.css";
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Grid, Button, Icon, Responsive, Divider } from 'semantic-ui-react';
+import styled from 'styled-components';
+import 'semantic-ui-css/semantic.min.css';
 
-import VerticalMenu from "./components/VerticalMenu";
-import Content from "./components/Content";
-
+import VerticalMenu from './components/VerticalMenu';
+import Content from './components/Content';
 
 const StyledGrid = styled(Grid)`
   position: relative;
   top: -60px;
 `;
 
-const StyledMenu = styled.div`margin-top: 60px;`;
+const StyledMenu = styled.div`
+  margin-top: 60px;
+`;
 
 export default class MainContent extends React.Component {
   constructor(props) {
@@ -57,10 +52,11 @@ export default class MainContent extends React.Component {
                 >
                   <Icon name="bars" />
                 </Button>
-                {this.state.mobileMenuVisible &&
+                {this.state.mobileMenuVisible && (
                   <StyledMenu>
                     <VerticalMenu />
-                  </StyledMenu>}
+                  </StyledMenu>
+                )}
               </Grid.Column>
             </Grid.Row>
             <Divider hidden />
@@ -93,4 +89,3 @@ export default class MainContent extends React.Component {
     );
   }
 }
-

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import {
   Table,
   List,
@@ -9,9 +9,9 @@ import {
   Button,
   Label,
   Icon
-} from "semantic-ui-react";
-import PropTypes from "prop-types";
-var dateFormat = require("dateformat");
+} from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+var dateFormat = require('dateformat');
 
 // function getActions(props) {
 //   if (props.goal.status !== "New") {
@@ -48,7 +48,7 @@ export default class GoalsList extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    console.log('componentDidMount');
     // axios
     //   .get("http://localhost:4000/goals/")
     //   .then(response => {
@@ -61,21 +61,21 @@ export default class GoalsList extends Component {
     const goals = [
       {
         id: 1,
-        username: "Paco",
-        description: "Go to gym twice at week!!! ",
+        username: 'Paco',
+        description: 'Go to gym twice at week!!! ',
         deadline: new Date(),
-        accountablePartner: "rebeca@gmail.com",
-        penalty: "5",
-        status: "new"
+        accountablePartner: 'rebeca@gmail.com',
+        penalty: '5',
+        status: 'new'
       },
       {
         id: 2,
-        username: "Paco",
-        description: "Do not eat sugar!!! ",
+        username: 'Paco',
+        description: 'Do not eat sugar!!! ',
         deadline: new Date(),
-        accountablePartner: "rebeca@gmail.com",
-        penalty: "5",
-        status: "new"
+        accountablePartner: 'rebeca@gmail.com',
+        penalty: '5',
+        status: 'new'
       }
     ];
     this.setState({ goals: goals });
@@ -83,7 +83,7 @@ export default class GoalsList extends Component {
 
   onDelete = id => () => {
     axios
-      .delete("http://localhost:4000/goals/delete/" + id)
+      .delete('http://localhost:4000/goals/delete/' + id)
       .then(res => console.log(res.data));
 
     this.setState({ goals: this.state.goals.filter(goal => goal._id !== id) });
@@ -94,15 +94,13 @@ export default class GoalsList extends Component {
     return this.state.goals.map(function(currentGoal) {
       const deadlineFormatted = dateFormat(
         new Date(currentGoal.deadline),
-        "dddd, mmmm dS, yyyy"
+        'dddd, mmmm dS, yyyy'
       );
 
       return (
         <Item key={currentGoal.id}>
           <Item.Content verticalAlign="middle">
-            <Item.Header>
-              {currentGoal.description}
-            </Item.Header>
+            <Item.Header>{currentGoal.description}</Item.Header>
             <Item.Extra>
               <Label color="green" horizontal>
                 Succeeded
@@ -119,9 +117,7 @@ export default class GoalsList extends Component {
   render() {
     return (
       <Segment>
-        <Item.Group divided>
-          {this.goalList()}
-        </Item.Group>
+        <Item.Group divided>{this.goalList()}</Item.Group>
       </Segment>
     );
   }
