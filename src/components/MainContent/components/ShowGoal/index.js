@@ -13,6 +13,7 @@ export default class ShowGoal extends Component {
 
     this.state = {
       goal: {
+        _id: '',
         username: '',
         description: '',
         deadline: new Date(),
@@ -28,6 +29,7 @@ export default class ShowGoal extends Component {
       .get(`http://localhost:4000/goals/${this.props.match.params.id}`)
       .then(response => {
         const goalRetrieved = {
+          _id: response.data._id,
           username: response.data.username,
           description: response.data.description,
           deadline: new Date(response.data.deadline),
@@ -50,6 +52,7 @@ export default class ShowGoal extends Component {
 
     this.setState({
       goal: {
+        _id: '',
         username: '',
         description: '',
         deadline: new Date(),
@@ -67,7 +70,6 @@ export default class ShowGoal extends Component {
       new Date(this.state.goal.deadline),
       'mmmm dS, yyyy'
     );
-
     return (
       <>
         <Table basic="very" celled verticalAlign="middle">

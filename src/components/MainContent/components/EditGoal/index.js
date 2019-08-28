@@ -46,7 +46,6 @@ export default class EditGoal extends Component {
     axios
       .get(`http://localhost:4000/goals/${this.props.match.params.id}`)
       .then(response => {
-        console.log(response.data);
         const goalRetrieved = {
           username: response.data.username,
           description: response.data.description,
@@ -105,13 +104,14 @@ export default class EditGoal extends Component {
     }
 
     const goalUpdated = {
-      username: this.getLoggedUser(),
+      username: this.state.goal.username,
       description: this.state.goal.description,
       deadline: this.state.goal.deadline,
       accountablePartner: this.state.goal.accountablePartner,
       penalty: this.state.goal.penalty,
       status: this.state.goal.status
     };
+    console.log(goalUpdated);
 
     axios
       .post(
@@ -187,7 +187,6 @@ export default class EditGoal extends Component {
       isDescriptionValid: this.isDescriptionValid(),
       isAcountablePartnerValid: this.isAcountablePartnerValid()
     };
-
     return (
       <GlobalForm
         validations={validations}

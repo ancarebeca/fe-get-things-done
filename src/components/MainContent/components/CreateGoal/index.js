@@ -82,7 +82,7 @@ export default class CreateGoal extends Component {
     }
 
     const newGoal = {
-      username: this.getLoggedUser(),
+      username: 'Rebeca',
       description: this.state.goal.description,
       deadline: this.state.goal.deadline,
       accountablePartner: this.state.goal.accountablePartner,
@@ -90,10 +90,12 @@ export default class CreateGoal extends Component {
       status: this.state.goal.status
     };
 
+    console.log(newGoal);
+
     axios.post('http://localhost:4000/goals/add', newGoal).then(res => {
       this.setState({
         goal: {
-          username: this.getLoggedUser(),
+          username: '',
           description: '',
           deadline: new Date(),
           accountablePartner: '',

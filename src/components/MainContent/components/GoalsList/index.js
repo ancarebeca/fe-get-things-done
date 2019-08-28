@@ -29,7 +29,7 @@ export default class GoalsList extends Component {
   goalList = () => {
     if (this.state.goals.length < 1) {
       return (
-        <Item>
+        <Item key="unknown">
           <Item.Content verticalAlign="middle">
             <Item.Header>Sorry! There isn't any goal available</Item.Header>
           </Item.Content>
@@ -45,7 +45,7 @@ export default class GoalsList extends Component {
 
       return (
         <>
-          <Item key={currentGoal.id}>
+          <Item key={currentGoal._id}>
             <Item.Content verticalAlign="middle">
               <Item.Header>{currentGoal.description}</Item.Header>
               <Item.Extra>
