@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Grid, Header, Container } from 'semantic-ui-react';
 import GlobalForm from '../GlobaForm';
 import PropTypes from 'prop-types';
 

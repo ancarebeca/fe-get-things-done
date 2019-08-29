@@ -1,13 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Grid,
-  Button,
-  Icon,
-  Responsive,
-  Divider,
-  Segment
-} from 'semantic-ui-react';
+import { Grid, Button, Icon, Responsive, Divider } from 'semantic-ui-react';
 import styled from 'styled-components';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -48,7 +40,7 @@ export default class MainContent extends React.Component {
           minWidth={Responsive.onlyMobile.minWidth}
           maxWidth={Responsive.onlyTablet.maxWidth}
         >
-          <StyledGrid stackable="true">
+          <StyledGrid stackable>
             <Grid.Row>
               <Grid.Column>
                 <Button

@@ -111,11 +111,14 @@ export default class ShowGoal extends Component {
           </Table.Body>
         </Table>
 
-        <a onClick={this.onDelete(this.state.goal._id)}>
-          <Button floated="right" color="red">
-            <Icon name="trash alternate" />
-          </Button>
-        </a>
+        <Button
+          floated="right"
+          color="red"
+          onClick={this.onDelete(this.state.goal._id)}
+        >
+          <Icon name="trash alternate" />
+        </Button>
+
         <Link to={'/edit/' + this.state.goal._id}>
           <Button floated="right" color="green">
             <Icon name="edit" />
