@@ -95,7 +95,7 @@ export default class CreateGoal extends Component {
     axios.post('http://localhost:4000/goals/add', newGoal).then(res => {
       this.setState({
         goal: {
-          username: '',
+          username: 'Rebeca',
           description: '',
           deadline: new Date(),
           accountablePartner: '',
