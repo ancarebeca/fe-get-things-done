@@ -4,242 +4,228 @@ import { shallow } from 'enzyme';
 
 const emptyFunction = () => {};
 
-// const defaultProps = {
-//   validations: {
-//     isPenaltyValid: true,
-//     isUserNameValid: true,
-//     isDescriptionValid: true,
-//     isAcountablePartnerValid: true
-//   },
-//   actions: {
-//     onChangeGoalDescription: emptyFunction,
-//     onChangeGoalDeadline: emptyFunction,
-//     onChangeGoalAcountablePartner: emptyFunction,
-//     onChangeGoalPenalty: emptyFunction,
-//     onChangeGoalStatus: emptyFunction,
-//     onSubmit: emptyFunction,
-//     onFocus: emptyFunction
-//   },
-//   errors: [],
-//   touched: {
-//     description: false,
-//     deadline: false,
-//     accountablePartner: false,
-//     penalty: false,
-//     status: false
-//   },
-//   goal: {
-//     description: 'Go to gym twice at week',
-//     deadline: new Date(),
-//     accountablePartner: 'Rebeca',
-//     penalty: '5',
-//     status: 'New'
-//   },
-//   buttonName: 'Create'
-// };
+const defaultProps = {
+  validations: {
+    isPenaltyValid: true,
+    isDescriptionValid: true,
+    isAcountablePartnerValid: true
+  },
+  actions: {
+    onChangeGoalDescription: emptyFunction,
+    onChangeGoalDeadline: emptyFunction,
+    onChangeGoalAcountablePartner: emptyFunction,
+    onChangeGoalPenalty: emptyFunction,
+    onSubmit: emptyFunction,
+    onFocus: emptyFunction
+  },
+  errors: [],
+  touched: {
+    description: false,
+    deadline: false,
+    accountablePartner: false,
+    penalty: false,
+    status: false
+  },
+  goal: {
+    description: 'Go to gym twice at week',
+    deadline: new Date(),
+    accountablePartner: 'Rebeca',
+    penalty: '5',
+    status: 'New'
+  },
+  buttonName: 'Create'
+};
 
-// function setUp(props = {}) {
-//   return shallow(<GlobalForm {...defaultProps} {...props} />);
-// }
+function setUp(props = {}) {
+  return shallow(<GlobalForm {...defaultProps} {...props} />);
+}
 
 describe('<GlobalForm/>', () => {
   it('handles on change succesfully', () => {
-    //     var today = new Date();
-    //     var tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-    //     const fieldNames = {
-    //       description: 'Go to gym twice at week',
-    //       dealdline: tomorrow,
-    //       accountablePartner: 'manuel@gmail.com'
-    //     };
-    //     const onChangeFake = jest.fn();
-    //     const wrapper = setUp({
-    //       actions: {
-    //         ...defaultProps.actions,
-    //         onChangeGoalDescription: onChangeFake,
-    //         onChangeGoalDeadline: onChangeFake,
-    //         onChangeGoalAcountablePartner: onChangeFake,
-    //         onChangeGoalPenalty: onChangeFake,
-    //         onChangeGoalStatus: onChangeFake
-    //       }
-    //     });
-    //     Object.keys(fieldNames).forEach(function(name) {
-    //       const usernameField = wrapper.find(`[name="${name}"]`);
-    //       usernameField.simulate('change', {
-    //         target: { value: fieldNames[name] }
-    //       });
-    //       expect(onChangeFake).toHaveBeenCalledWith({
-    //         target: { value: fieldNames[name] }
-    //       });
-    //     });
+    var today = new Date();
+    var tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+    const fieldNames = {
+      description: 'Go to gym twice at week',
+      dealdline: tomorrow,
+      accountablePartner: 'manuel@gmail.com'
+    };
+    const onChangeFake = jest.fn();
+    const wrapper = setUp({
+      actions: {
+        ...defaultProps.actions,
+        onChangeGoalDescription: onChangeFake,
+        onChangeGoalDeadline: onChangeFake,
+        onChangeGoalAcountablePartner: onChangeFake,
+        onChangeGoalPenalty: onChangeFake,
+        onChangeGoalStatus: onChangeFake
+      }
+    });
+    Object.keys(fieldNames).forEach(function(name) {
+      const usernameField = wrapper.find(`[name="${name}"]`);
+      usernameField.simulate('change', {
+        target: { value: fieldNames[name] }
+      });
+      expect(onChangeFake).toHaveBeenCalledWith({
+        target: { value: fieldNames[name] }
+      });
+    });
   });
 
-  //   // it('handles on submit', () => {
-  //   //   const onSubmit = jest.fn();
-  //   //   const wrapper = setUp({
-  //   //     actions: { ...defaultProps.actions, onSubmit }
-  //   //   });
-  //   //   wrapper
-  //   //     .find('Form')
-  //   //     .props()
-  //   //     .onSubmit();
-  //   //   expect(onSubmit).toHaveBeenCalled();
-  //   // });
+  it('handles on submit', () => {
+    const onSubmit = jest.fn();
+    const wrapper = setUp({
+      actions: { ...defaultProps.actions, onSubmit }
+    });
+    wrapper
+      .find('Form')
+      .props()
+      .onSubmit();
+    expect(onSubmit).toHaveBeenCalled();
+  });
 
-  //   // it('renders errors message when form contains some errors', () => {
-  //   //   const errors = ['Some forms fields are invalid'];
-  //   //   const wrapper = setUp({
-  //   //     errors
-  //   //   });
-  //   //   wrapper.find('Message');
+  it('renders errors message when form contains some errors', () => {
+    const errors = ['Some forms fields are invalid'];
+    const wrapper = setUp({
+      errors
+    });
+    wrapper.find('Message');
 
-  //   //   expect(wrapper.find('Message').props()).toMatchObject({
-  //   //     error: true,
-  //   //     header: 'There was some errors with your submission',
-  //   //     list: errors
-  //   //   });
-  //   // });
+    expect(wrapper.find('Message').props()).toMatchObject({
+      error: true,
+      header: 'There was some errors with your submission',
+      list: errors
+    });
+  });
 
-  //   // it('handles on focus', () => {
-  //   //   const fieldNames = {
-  //   //     username: 'Rebeca',
-  //   //     description: 'Go to gym twice at week',
-  //   //     accountablePartner: 'Manuel'
-  //   //   };
+  it('handles on focus', () => {
+    const fieldNames = {
+      description: 'Go to gym twice at week',
+      accountablePartner: 'Manuel'
+    };
 
-  //   //   const fieldTouched = [];
-  //   //   const onFocusFake = fieldName => {
-  //   //     fieldTouched.push(fieldName);
-  //   //   };
+    const fieldTouched = [];
+    const onFocusFake = fieldName => {
+      fieldTouched.push(fieldName);
+    };
 
-  //   //   const wrapper = setUp({
-  //   //     actions: {
-  //   //       ...defaultProps.actions,
-  //   //       onFocus: onFocusFake
-  //   //     }
-  //   //   });
+    const wrapper = setUp({
+      actions: {
+        ...defaultProps.actions,
+        onFocus: onFocusFake
+      }
+    });
 
-  //   //   Object.keys(fieldNames).forEach(function(name) {
-  //   //     const fieldName = wrapper.find(`[name="${name}"]`);
-  //   //     fieldName.simulate('focus', {
-  //   //       target: { value: fieldNames[name] }
-  //   //     });
+    Object.keys(fieldNames).forEach(function(name) {
+      const fieldName = wrapper.find(`[name="${name}"]`);
+      fieldName.simulate('focus', {
+        target: { value: fieldNames[name] }
+      });
 
-  //   //     const found = fieldTouched.find(function(field) {
-  //   //       return field === name;
-  //   //     });
+      const found = fieldTouched.find(function(field) {
+        return field === name;
+      });
 
-  //   //     expect(found).toEqual(name);
-  //   //   });
-  //   // });
+      expect(found).toEqual(name);
+    });
+  });
 
-  //   // it('does not render field error when validations succeded and inputs are touched', () => {
-  //   //   const touched = {
-  //   //     username: true,
-  //   //     description: true,
-  //   //     deadline: true,
-  //   //     accountablePartner: true,
-  //   //     penalty: true,
-  //   //     status: true
-  //   //   };
+  it('does not render field error when validations succeded and inputs are touched', () => {
+    const touched = {
+      description: true,
+      deadline: true,
+      accountablePartner: true,
+      penalty: true,
+      status: true
+    };
 
-  //   //   const validations = {
-  //   //     isPenaltyValid: true,
-  //   //     isUserNameValid: true,
-  //   //     isDescriptionValid: true,
-  //   //     isAcountablePartnerValid: true
-  //   //   };
+    const validations = {
+      isPenaltyValid: true,
+      isDescriptionValid: true,
+      isAcountablePartnerValid: true
+    };
 
-  //   //   const wrapper = setUp({
-  //   //     touched,
-  //   //     validations
-  //   //   });
+    const wrapper = setUp({
+      touched,
+      validations
+    });
 
-  //   //   wrapper.find('input').forEach(input => {
-  //   //     expect(input.parent().props().error).not.toBeUndefined();
-  //   //     expect(input.parent().props().error).toBe(false);
-  //   //   });
-  //   // });
+    wrapper.find('input').forEach(input => {
+      expect(input.parent().props().error).not.toBeUndefined();
+      expect(input.parent().props().error).toBe(false);
+    });
+  });
 
-  //   // it('does not render field error when validations succeded and input are not touched', () => {
-  //   //   const touched = {
-  //   //     username: false,
-  //   //     description: false,
-  //   //     deadline: false,
-  //   //     accountablePartner: false,
-  //   //     penalty: false,
-  //   //     status: false
-  //   //   };
+  it('does not render field error when validations succeded and input are not touched', () => {
+    const touched = {
+      description: false,
+      deadline: false,
+      accountablePartner: false,
+      penalty: false
+    };
 
-  //   //   const validations = {
-  //   //     isPenaltyValid: true,
-  //   //     isUserNameValid: true,
-  //   //     isDescriptionValid: true,
-  //   //     isAcountablePartnerValid: true
-  //   //   };
+    const validations = {
+      isPenaltyValid: true,
+      isDescriptionValid: true,
+      isAcountablePartnerValid: true
+    };
 
-  //   //   const wrapper = setUp({
-  //   //     touched,
-  //   //     validations
-  //   //   });
+    const wrapper = setUp({
+      touched,
+      validations
+    });
 
-  //   //   wrapper.find('input').forEach(input => {
-  //   //     expect(input.parent().props().error).not.toBeUndefined();
-  //   //     expect(input.parent().props().error).toBe(false);
-  //   //   });
-  //   // });
+    wrapper.find('input').forEach(input => {
+      expect(input.parent().props().error).not.toBeUndefined();
+      expect(input.parent().props().error).toBe(false);
+    });
+  });
 
-  //   // it('renders field errors when validations are failed and input are touched', () => {
-  //   //   const touched = {
-  //   //     username: true,
-  //   //     description: true,
-  //   //     deadline: true,
-  //   //     accountablePartner: true,
-  //   //     penalty: true,
-  //   //     status: true
-  //   //   };
+  it('renders field errors when validations are failed and input are touched', () => {
+    const touched = {
+      description: true,
+      deadline: true,
+      accountablePartner: true,
+      penalty: true
+    };
 
-  //   //   const validations = {
-  //   //     isPenaltyValid: false,
-  //   //     isUserNameValid: false,
-  //   //     isDescriptionValid: false,
-  //   //     isAcountablePartnerValid: false
-  //   //   };
+    const validations = {
+      isPenaltyValid: false,
+      isDescriptionValid: false,
+      isAcountablePartnerValid: false
+    };
 
-  //   //   const wrapper = setUp({
-  //   //     touched,
-  //   //     validations
-  //   //   });
+    const wrapper = setUp({
+      touched,
+      validations
+    });
 
-  //   //   wrapper.find('input').forEach(input => {
-  //   //     expect(input.parent().props().error).not.toBeUndefined();
-  //   //     expect(input.parent().props().error).toBe(true);
-  //   //   });
-  //   // });
+    wrapper.find('input').forEach(input => {
+      expect(input.parent().props().error).not.toBeUndefined();
+      expect(input.parent().props().error).toBe(true);
+    });
+  });
 
-  //   // it('renders field errors when validations are failed and input are not touched', () => {
-  //   //   const touched = {
-  //   //     username: false,
-  //   //     description: false,
-  //   //     deadline: false,
-  //   //     accountablePartner: false,
-  //   //     penalty: false,
-  //   //     status: false
-  //   //   };
-  //   //   const validations = {
-  //   //     isPenaltyValid: false,
-  //   //     isUserNameValid: false,
-  //   //     isDescriptionValid: false,
-  //   //     isAcountablePartnerValid: false
-  //   //   };
+  it('renders field errors when validations are failed and input are not touched', () => {
+    const touched = {
+      description: false,
+      deadline: false,
+      accountablePartner: false,
+      penalty: false
+    };
+    const validations = {
+      isPenaltyValid: false,
+      isDescriptionValid: false,
+      isAcountablePartnerValid: false
+    };
 
-  //   //   const wrapper = setUp({
-  //   //     touched,
-  //   //     validations
-  //   //   });
+    const wrapper = setUp({
+      touched,
+      validations
+    });
 
-  //   //   wrapper.find('input').forEach(input => {
-  //   //     expect(input.parent().props().error).not.toBeUndefined();
-  //   //     expect(input.parent().props().error).toBe(false);
-  //   //   });
-  //   // });
+    wrapper.find('input').forEach(input => {
+      expect(input.parent().props().error).not.toBeUndefined();
+      expect(input.parent().props().error).toBe(false);
+    });
+  });
 });
