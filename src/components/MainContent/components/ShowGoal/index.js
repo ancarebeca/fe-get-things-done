@@ -99,7 +99,10 @@ export default class ShowGoal extends Component {
               <Table.Cell>
                 <Header as="h4">Penalty:</Header>
               </Table.Cell>
-              <Table.Cell>{this.state.goal.penalty}</Table.Cell>
+              <Table.Cell>
+                {this.state.goal.penalty}
+                <Icon name="euro sign" />
+              </Table.Cell>
             </Table.Row>
 
             <Table.Row>

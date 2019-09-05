@@ -16,7 +16,6 @@ export default class CreateGoal extends Component {
       this
     );
     this.onChangeGoalPenalty = this.onChangeGoalPenalty.bind(this);
-    this.onChangeGoalStatus = this.onChangeGoalStatus.bind(this);
     this.handleOnFocus = this.handleOnFocus.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -34,8 +33,7 @@ export default class CreateGoal extends Component {
         description: false,
         deadline: false,
         accountablePartner: false,
-        penalty: false,
-        status: false
+        penalty: false
       }
     };
   }
@@ -68,29 +66,19 @@ export default class CreateGoal extends Component {
     });
   }
 
-  onChangeGoalStatus(e) {
-    this.setState({
-      goal: { ...this.state.goal, status: e.target.value }
-    });
-  }
-
   onSubmit(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
-    if (!this.handleValidation()) {
-      return;
-    }
-
+    if (!this.handleValidation()) return;
+    
     const newGoal = {
-      username: 'Rebeca',
+      username: 'Rebeca', // Todo Change it when loggin is implemented
       description: this.state.goal.description,
       deadline: this.state.goal.deadline,
       accountablePartner: this.state.goal.accountablePartner,
       penalty: this.state.goal.penalty,
       status: this.state.goal.status
     };
-
-    console.log(newGoal);
 
     axios.post('http://localhost:4000/goals/add', newGoal).then(res => {
       this.setState({
@@ -104,7 +92,6 @@ export default class CreateGoal extends Component {
         }
       });
       this.props.history.push('/');
-      console.log(res.data);
     });
   }
 
@@ -139,10 +126,6 @@ export default class CreateGoal extends Component {
     return !value || value === undefined || value === '' || value.length === 0;
   }
 
-  isUsernameValid() {
-    return !this.isEmptyField(this.state.goal.username);
-  }
-
   isDescriptionValid() {
     const description = this.state.goal.description;
     return !this.isEmptyField(description);
@@ -165,7 +148,6 @@ export default class CreateGoal extends Component {
       onChangeGoalDeadline: this.onChangeGoalDeadline,
       onChangeGoalAcountablePartner: this.onChangeGoalAcountablePartner,
       onChangeGoalPenalty: this.onChangeGoalPenalty,
-      onChangeGoalStatus: this.onChangeGoalStatus,
       onSubmit: this.onSubmit,
       onFocus: this.handleOnFocus
     };

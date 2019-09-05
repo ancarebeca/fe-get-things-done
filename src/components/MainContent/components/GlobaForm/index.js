@@ -61,7 +61,7 @@ export default function GlobalForm({
               value={goal.penalty}
               onChange={actions.onChangeGoalPenalty}
               onFocus={actions.onFocus('penalty')}
-            />
+            ></input>
           </Form.Field>
           <Message
             error
@@ -89,7 +89,6 @@ GlobalForm.propTypes = {
     onChangeGoalDeadline: PropTypes.func.isRequired,
     onChangeGoalAcountablePartner: PropTypes.func.isRequired,
     onChangeGoalPenalty: PropTypes.func.isRequired,
-    onChangeGoalStatus: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onFocus: PropTypes.func.isRequired
   }),
